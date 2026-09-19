@@ -3,7 +3,10 @@ from typing import Dict, Union
 
 import io
 import zlib
-import Bencrypt
+try:
+    from . import Bencrypt
+except ImportError:
+    import Bencrypt
 
 def Crc32(data: bytes) -> str:
     return zlib.crc32(data).to_bytes(4, 'little').hex()

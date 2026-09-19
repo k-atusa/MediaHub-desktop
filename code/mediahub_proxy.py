@@ -6,8 +6,7 @@ import re
 import urllib.parse
 from Cryptodome.Cipher import AES
 
-import Bencrypt
-import Opsec
+from engine import Bencrypt, Opsec
 
 
 class _Handler(http.server.BaseHTTPRequestHandler):

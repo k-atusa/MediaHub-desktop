@@ -24,7 +24,7 @@ except ImportError:
 
 from mediahub_core import MHClient
 from mediahub_proxy import MHProxy
-import Opsec
+from engine import Opsec
 
 try:
     import keyring
@@ -377,7 +377,7 @@ class WkThumb(WkBase):
     def run(self):
         try:
             import requests
-            import Bencrypt
+            from engine import Bencrypt
             url = f"{self.cli.url}/api/media/{self.fPid}/{self.fpid}/thumb"
             res = requests.get(url, verify=self.cli.verify_ssl)
             if res.status_code == 200 and res.content:

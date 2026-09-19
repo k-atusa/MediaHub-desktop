@@ -1,6 +1,4 @@
-import re
-
-with open("gui_app.py", "r") as f:
+with open("app.py", "r") as f:
     content = f.read()
 
 content = content.replace("from PyQt6.QtCore import Qt, QThread, pyqtSignal, QUrl, QPoint, QPointF", "from PyQt6.QtCore import Qt, QThread, pyqtSignal, QUrl, QPoint, QPointF, QSize")
@@ -337,5 +335,5 @@ doview_new = """    def doView(self):
 content = content.replace(doview_old, doview_new)
 content = content.replace("self.viewBtn.setEnabled(not on)", "self.viewModeBtn.setEnabled(not on)")
 
-with open("gui_app.py", "w") as f:
+with open("app.py", "w") as f:
     f.write(content)

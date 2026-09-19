@@ -5,9 +5,7 @@ import requests
 import urllib3
 import cv2
 
-import Bencode
-import Bencrypt
-import Opsec
+from engine import Bencode, Bencrypt, Opsec
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
