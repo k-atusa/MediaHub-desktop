@@ -58,7 +58,10 @@ class MHClient:
         self.fldMap[name] = Bencrypt.Random(32) + Bencrypt.Random(12)
         sm = Bencrypt.SymMaster("gcm1", self.uKey[:32])
         enc = sm.EnBin(Opsec.EncodeCfg(self.fldMap))
-        res = requests.post(f"{self.url}/api/userdata/{self.uHash}", data=enc, verify=self.verify_ssl)
+        res = requests.post(f"{self.url}/api/userdata/{self.uHash}",
+                            data=enc,
+                            headers={'X-User-Hash': self.uHash},
+                            verify=self.verify_ssl)
         if res.status_code != 200:
             raise Exception(f"Failed to create folder: code {res.status_code}")
 
