@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaHub</title>
+    <link rel="icon" type="image/png" href="./favicon.png">
+
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- Theme Initialization Script (Prevents FOUC) -->
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme') || 'system';
+            if (saved === 'dark' || saved === 'light') {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./js/engine/viewerjs.min.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/drive.css">
+    <link rel="stylesheet" href="./css/viewer.css">
+</head>
+
+<body>
+    <!-- ========================================== -->
+    <!-- 1. VIEW: LOGIN & REGISTRATION              -->
+    <!-- ========================================== -->
+    <div id="view-login" class="view-container">
+        <div class="signin-card">
+            <div class="header-section">
+                <div class="drive-logo">
+                    <img src="icons/icon.png" alt="MediaHub Logo" class="drive-logo-img">
+                    <span class="drive-title">MediaHub</span>
+                </div>
+                <div class="sub-header">
+                    <h2>Sign in</h2>
+                    <p style="color: var(--g-text-sub); font-size: 14px; margin-top: 4px;">to continue to MediaHub</p>
+                </div>
+            </div>
+
+            <div class="input-fields">
+                <div class="input-wrapper">
+                    <label class="input-label" for="username">Username</label>
+                    <input type="text" id="username" class="google-input" placeholder="Enter your username"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+                </div>
+
+                <div class="input-wrapper">
+                    <label class="input-label" for="password">Password</label>
+                    <input type="password" id="password" class="google-input" placeholder="Enter your password"
+                        autocomplete="current-password" autocorrect="off" autocapitalize="off" spellcheck="false"
+                        data-lpignore="true">
+                </div>
+            </div>
+
+            <div class="actions-section"
+                style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px;">
+                <button type="button" class="btn-action btn-tonal" id="btnRegister">Create account</button>
+                <button type="button" class="btn-action btn-primary" id="btnLogin">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. VIEW: DRIVE WORKSPACE                   -->
+    <!-- ========================================== -->
+    <div id="view-drive" class="view-container">
+        <!-- Mobile Sidebar Backdrop Overlay -->
+        <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+        <!-- Drive Header (Navbar) -->
+        <header class="drive-header">
+            <div class="header-left">
+                <button class="menu-btn" id="btnToggleSidebar" title="Main menu">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="logo-wrap">
+                    <img src="icons/icon.png" alt="MediaHub Logo" class="nav-logo-img">
+                    <span class="app-title">MediaHub</span>
+                </div>
+            </div>
+
+            <div class="header-search-box" id="headerSearchBox">
+                <button class="mobile-search-back-btn" id="btnMobileSearchClose" type="button" title="Back">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <input type="text" class="search-input" placeholder="Search in MediaHub" id="topSearchInput"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+                <button class="search-clear-btn" id="btnSearchClear" type="button" title="Clear search"
+                    style="display: none;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+                </button>
+            </div>
+
+            <div class="header-right">
+                <!-- Mobile Search Toggle Button -->
+                <button class="header-icon-btn mobile-search-toggle" id="btnMobileSearchToggle" type="button"
+                    title="Search">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <!-- Account Menu Dropdown -->
+                <div class="account-menu-wrapper" id="accountMenuWrapper">
+                    <button class="profile-avatar-btn" id="btnAccountMenu" type="button" aria-haspopup="true"
+                        aria-expanded="false" title="Account profile">
+                        <div class="profile-avatar" id="headerAvatar">TE</div>
+                    </button>
+                    <div class="account-dropdown-menu" id="accountDropdownMenu">
+                        <div class="account-menu-header">
+                            <div class="account-avatar-large" id="menuLargeAvatar">TE</div>
+                            <div class="account-details">
+                                <div class="account-username" id="menuUsername">User</div>
+                                <div class="account-badge" id="menuUserHashShort">E2EE Account</div>
+                            </div>
+                        </div>
+                        <div class="drive-menu-divider"></div>
+                        <div class="drive-menu-item" id="accountMenuItemTheme">
+                            <span class="material-symbols-outlined menu-icon"
+                                id="accountMenuThemeIcon">brightness_auto</span>
+                            <span class="menu-label" id="accountMenuThemeLabel">Theme: System (Auto)</span>
+                        </div>
+                        <div class="drive-menu-item" id="accountMenuItemPassword">
+                            <span class="material-symbols-outlined menu-icon">lock_reset</span>
+                            <span class="menu-label">Change password</span>
+                        </div>
+                        <div class="drive-menu-divider"></div>
+                        <div class="drive-menu-item" id="accountMenuItemLogout">
+                            <span class="material-symbols-outlined menu-icon">logout</span>
+                            <span class="menu-label">Sign out</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Drive Layout -->
+        <div class="drive-body">
+            <!-- Sidebar Navigation Drawer -->
+            <aside class="drive-sidebar">
+                <div class="mobile-drawer-header" id="mobileDrawerHeader">
+                    <div class="logo-wrap">
+                        <img src="icons/icon.png" alt="MediaHub Logo" class="nav-logo-img">
+                        <span class="app-title">MediaHub</span>
+                    </div>
+                    <button class="drawer-close-btn" id="btnCloseSidebarDrawer" type="button" title="Close menu">
+                        <span class="material-symbols-outlined">menu_open</span>
+                    </button>
+                </div>
+
+                <!-- "+ New" Button & Dropdown Menu -->
+                <div class="new-action-wrapper" id="newActionWrapper">
+                    <button class="btn-new-drive" id="btnNewDropdown" type="button" aria-haspopup="true"
+                        aria-expanded="false" title="New">
+                        <span class="material-symbols-outlined plus-icon">add</span>
+                        <span>New</span>
+                    </button>
+                    <div class="new-drive-menu" id="newDriveMenu">
+                        <div class="drive-menu-item" id="menuItemNewFolder">
+                            <span class="material-symbols-outlined menu-icon">create_new_folder</span>
+                            <span class="menu-label">New folder</span>
+                        </div>
+                        <div class="drive-menu-item" id="btnImport" title="Import share token">
+                            <span class="material-symbols-outlined menu-icon">file_download</span>
+                            <span class="menu-label">Import folder</span>
+                        </div>
+                        <div class="drive-menu-divider"></div>
+                        <div class="drive-menu-item" id="menuItemFileUpload">
+                            <span class="material-symbols-outlined menu-icon">upload_file</span>
+                            <span class="menu-label">File upload</span>
+                        </div>
+                        <div class="drive-menu-item" id="menuItemFolderUpload">
+                            <span class="material-symbols-outlined menu-icon">drive_folder_upload</span>
+                            <span class="menu-label">Folder upload</span>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav-list">
+                    <div class="sidebar-section-header" id="sidebarMyDriveHeader">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">hard_drive</span>
+                        <span>My Drive</span>
+                    </div>
+                    <div id="sidebarFolderList" class="sidebar-folder-list"></div>
+                </nav>
+            </aside>
+
+            <!-- Main Workspace -->
+            <main class="drive-workspace">
+                <!-- Workspace Top Bar -->
+                <div class="workspace-top-bar">
+                    <div class="breadcrumb-container">
+                        <div class="breadcrumb-trail">
+                            <span class="breadcrumb-link">My Drive</span>
+                            <span class="breadcrumb-separator" id="breadcrumbSeparator">/</span>
+                            <span class="breadcrumb-current" id="breadcrumbFolderName"></span>
+                        </div>
+                        <div class="workspace-title-row" style="display: flex; align-items: center; gap: 8px;">
+                            <h1 class="workspace-folder-title" id="currentFolderTitle">My Drive</h1>
+                            <button id="btnCurrentFolderMore" type="button"
+                                style="display: none; width: 32px; height: 32px; border-radius: 50%; border: none; background: transparent; align-items: center; justify-content: center; cursor: pointer; color: var(--g-text-secondary, #5f6368);"
+                                title="Folder options" aria-label="Folder options">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">more_vert</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="workspace-action-group">
+                        <!-- View Options Dropdown Menu -->
+                        <div class="view-action-wrapper" id="viewActionWrapper">
+                            <button class="top-action-btn" id="btnViewMenu" type="button" aria-haspopup="true"
+                                aria-expanded="false" title="View options">
+                                <span class="material-symbols-outlined" id="viewModeIcon">grid_view</span>
+                                <span>View</span>
+                            </button>
+                            <div class="view-dropdown-menu" id="viewDropdownMenu">
+                                <div class="view-menu-header">View</div>
+                                <div class="view-menu-item" data-view="extra-large" id="viewOptExtraLarge">
+                                    <span class="material-symbols-outlined menu-icon">photo_size_select_actual</span>
+                                    <span class="menu-label">Extra large icons</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="view-menu-item" data-view="large" id="viewOptLarge">
+                                    <span class="material-symbols-outlined menu-icon">view_module</span>
+                                    <span class="menu-label">Large icons</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="view-menu-item active" data-view="medium" id="viewOptMedium">
+                                    <span class="material-symbols-outlined menu-icon">grid_view</span>
+                                    <span class="menu-label">Medium icons</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="view-menu-item" data-view="small" id="viewOptSmall">
+                                    <span class="material-symbols-outlined menu-icon">view_compact</span>
+                                    <span class="menu-label">Small icons</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="drive-menu-divider"></div>
+                                <div class="view-menu-item" data-view="details" id="viewOptDetails">
+                                    <span class="material-symbols-outlined menu-icon">view_list</span>
+                                    <span class="menu-label">Details</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sort As Dropdown Menu -->
+                        <div class="sort-action-wrapper" id="sortActionWrapper">
+                            <button class="top-action-btn" id="btnSortMenu" type="button" aria-haspopup="true"
+                                aria-expanded="false" title="Sort files">
+                                <span class="material-symbols-outlined" id="sortModeIcon">swap_vert</span>
+                                <span id="sortModeText">Sort as</span>
+                            </button>
+                            <div class="sort-dropdown-menu" id="sortDropdownMenu">
+                                <div class="sort-menu-header">Sort files by</div>
+                                <div class="sort-menu-item active" data-sort="name-asc" id="sortOptNameAsc">
+                                    <span class="material-symbols-outlined menu-icon">arrow_upward</span>
+                                    <span class="menu-label">Name (A to Z)</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="sort-menu-item" data-sort="name-desc" id="sortOptNameDesc">
+                                    <span class="material-symbols-outlined menu-icon">arrow_downward</span>
+                                    <span class="menu-label">Name (Z to A)</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="drive-menu-divider"></div>
+                                <div class="sort-menu-item" data-sort="size-asc" id="sortOptSizeAsc">
+                                    <span class="material-symbols-outlined menu-icon">straighten</span>
+                                    <span class="menu-label">Size (Small to Large)</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                                <div class="sort-menu-item" data-sort="size-desc" id="sortOptSizeDesc">
+                                    <span class="material-symbols-outlined menu-icon">inventory_2</span>
+                                    <span class="menu-label">Size (Large to Small)</span>
+                                    <span class="material-symbols-outlined check-icon">check</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Keyword Filter Dropdown -->
+                        <div class="filter-action-wrapper" id="filterActionWrapper">
+                            <button class="top-action-btn" id="btnKeywordFilter" type="button" aria-haspopup="true"
+                                aria-expanded="false" title="Filter files by keywords">
+                                <span class="material-symbols-outlined" id="keywordFilterIcon">filter_list</span>
+                                <span>Filter</span>
+                                <span class="filter-count-badge" id="filterCountBadge" style="display: none;">0</span>
+                            </button>
+                            <div class="filter-dropdown-menu" id="filterDropdownMenu">
+                                <div class="filter-menu-header" id="filterMenuHeader">
+                                    <span class="filter-header-title">Filter by keywords</span>
+                                    <button type="button" id="btnClearAllKeywords" class="filter-menu-clear-btn"
+                                        style="display: none;">Clear all</button>
+                                </div>
+                                <div class="filter-search-wrap" id="keywordSearchWrap"
+                                    style="padding: 4px 8px 6px 8px; display: none;">
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <span class="material-symbols-outlined"
+                                            style="position: absolute; left: 8px; font-size: 16px; color: var(--g-text-muted);">search</span>
+                                        <input type="text" id="keywordFilterSearchInput"
+                                            class="filter-dropdown-search-input" placeholder="Search keywords..."
+                                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                                            data-lpignore="true">
+                                    </div>
+                                </div>
+                                <div class="filter-items-scroll-list" id="keywordListContainer"></div>
+                                <div id="keywordEmptyMessage" class="filter-empty-message" style="display: none;">
+                                    <span class="material-symbols-outlined"
+                                        style="font-size: 26px; margin-bottom: 4px; display: block; opacity: 0.6;">search_off</span>
+                                    <div style="font-size: 13px; font-weight: 500; color: var(--g-text-main);">No keywords found</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Root Folder View -->
+                <section id="rootFolderView" class="root-folder-view">
+                    <div class="root-folder-header">Folders</div>
+                    <div id="rootFolderGrid" class="root-folder-grid"></div>
+                </section>
+
+                <!-- Media Container (Folder View) -->
+                <section id="mediaContainer" style="display: none; flex-direction: column; flex: 1; overflow-y: auto;">
+                    <div id="activeFilterChipsBar" class="active-filter-chips-bar" style="display: none;">
+                        <span class="chips-label">
+                            <span class="material-symbols-outlined"
+                                style="font-size: 16px; color: var(--g-primary-blue);">filter_alt</span>
+                            Filters:
+                        </span>
+                        <div class="chips-scroll-wrap" id="activeChipsList"></div>
+                        <button class="clear-chips-btn" id="btnClearActiveChips" type="button">Clear all</button>
+                    </div>
+
+                    <div id="listViewHeader" class="list-view-header">
+                        <div class="list-header-col list-header-name">Name</div>
+                        <div class="list-header-col list-header-size">Size</div>
+                        <div class="list-header-col list-header-more"></div>
+                    </div>
+
+                    <div id="mediaGrid" class="media-grid"></div>
+
+                    <div id="infiniteScrollLoader" class="infinite-scroll-loader">
+                        <svg class="m3-circular-spinner" viewBox="0 0 48 48">
+                            <circle class="m3-circular-track" cx="24" cy="24" r="18" fill="none" stroke-width="4"></circle>
+                            <circle class="m3-circular-indicator" cx="24" cy="24" r="18" fill="none" stroke-width="4"
+                                stroke-linecap="round"></circle>
+                        </svg>
+                        <span>Loading files...</span>
+                    </div>
+
+                    <div class="empty-state-view" id="emptyStateContainer">
+                        <span class="material-symbols-outlined empty-cloud-icon" id="emptyStateIcon">cloud_upload</span>
+                        <div class="empty-title" id="emptyStateTitle">This folder is empty</div>
+                        <div class="empty-subtitle" id="emptyStateSubtitle">Drag and drop files anywhere on the page, or use the upload button.</div>
+                        <button class="btn-empty-upload" id="btnEmptyUploadAction">
+                            <span class="material-symbols-outlined">add</span>
+                            <span>Upload</span>
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. VIEW: MEDIA VIEWER                      -->
+    <!-- ========================================== -->
+    <div id="view-viewer" class="view-container">
+        <!-- Topbar -->
+        <header class="preview-topbar">
+            <div class="topbar-left">
+                <button class="icon-btn" id="btnViewerBack" title="Close / Back to Drive">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <span id="txName" class="topbar-filename"></span>
+                <button id="btnViewerMore" class="icon-btn viewer-more-btn" title="More options" aria-label="More options">
+                    <span class="material-symbols-outlined">more_vert</span>
+                </button>
+            </div>
+
+            <div class="topbar-actions">
+                <button id="btnViewerShare" class="icon-btn" title="Share link">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+                <button id="btnViewerEdit" class="icon-btn" title="Rename">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+                <button id="btnViewerDown" class="icon-btn" title="Download">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+                <button id="btnViewerDelete" class="icon-btn btn-danger" title="Delete">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Viewer Mobile Action Menu -->
+        <div class="viewer-action-menu" id="viewerActionMenu">
+            <div class="viewer-menu-item" id="viewerMenuShare">
+                <span class="material-symbols-outlined menu-icon">share</span>
+                <span class="menu-label">Share</span>
+            </div>
+            <div class="viewer-menu-item" id="viewerMenuRename">
+                <span class="material-symbols-outlined menu-icon">drive_file_rename_outline</span>
+                <span class="menu-label">Rename</span>
+            </div>
+            <div class="viewer-menu-item" id="viewerMenuDownload">
+                <span class="material-symbols-outlined menu-icon">download</span>
+                <span class="menu-label">Download</span>
+            </div>
+            <div class="viewer-menu-item danger-item" id="viewerMenuDelete">
+                <span class="material-symbols-outlined menu-icon">delete_outline</span>
+                <span class="menu-label">Delete</span>
+            </div>
+        </div>
+
+        <!-- Media Canvas -->
+        <main class="preview-canvas">
+            <div id="viewBody" class="body-box">
+                <p style="color: var(--preview-subtext); font-size: 14px;">Loading...</p>
+            </div>
+        </main>
+
+        <!-- Floating Side Navigation (Previous / Next) -->
+        <button id="btnPrevFile" class="btn-floating-nav hidden" title="Previous file">
+            <span class="material-symbols-outlined" style="font-size: 28px;">chevron_left</span>
+        </button>
+        <button id="btnNextFile" class="btn-floating-nav hidden" title="Next file">
+            <span class="material-symbols-outlined" style="font-size: 28px;">chevron_right</span>
+        </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 4. COMMON HIDDEN CONTROLS & INPUTS         -->
+    <!-- ========================================== -->
+    <input type="file" id="fileInput" multiple style="display: none;">
+    <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none;">
+
+    <!-- ========================================== -->
+    <!-- 5. CONTEXT MENUS                           -->
+    <!-- ========================================== -->
+    <!-- Folder Context Menu -->
+    <div class="new-drive-menu folder-action-menu" id="folderActionMenu">
+        <div class="drive-menu-item" id="folderMenuRename">
+            <span class="material-symbols-outlined menu-icon">drive_file_rename_outline</span>
+            <span class="menu-label">Rename</span>
+        </div>
+        <div class="drive-menu-item" id="folderMenuShare">
+            <span class="material-symbols-outlined menu-icon">share</span>
+            <span class="menu-label">Share folder</span>
+        </div>
+        <div class="drive-menu-item" id="folderMenuTrim">
+            <span class="material-symbols-outlined menu-icon">cleaning_services</span>
+            <span class="menu-label">Trim orphan files</span>
+        </div>
+        <div class="drive-menu-item" id="folderMenuUnlink">
+            <span class="material-symbols-outlined menu-icon">link_off</span>
+            <span class="menu-label">Remove from account</span>
+        </div>
+        <div class="drive-menu-divider"></div>
+        <div class="drive-menu-item" id="folderMenuDelete" style="color: var(--g-danger, #b3261e);">
+            <span class="material-symbols-outlined menu-icon">delete_forever</span>
+            <span class="menu-label">Delete permanently</span>
+        </div>
+    </div>
+
+    <!-- File Context Menu -->
+    <div class="new-drive-menu file-action-menu" id="fileActionMenu">
+        <div class="drive-menu-item" id="fileMenuShare">
+            <span class="material-symbols-outlined menu-icon">share</span>
+            <span class="menu-label">Share</span>
+        </div>
+        <div class="drive-menu-item" id="fileMenuRename">
+            <span class="material-symbols-outlined menu-icon">drive_file_rename_outline</span>
+            <span class="menu-label">Rename</span>
+        </div>
+        <div class="drive-menu-item" id="fileMenuDownload">
+            <span class="material-symbols-outlined menu-icon">download</span>
+            <span class="menu-label">Download</span>
+        </div>
+        <div class="drive-menu-item" id="fileMenuDelete" style="color: var(--g-danger, #b3261e);">
+            <span class="material-symbols-outlined menu-icon"
+                style="color: var(--g-danger, #b3261e);">delete_outline</span>
+            <span class="menu-label" style="color: var(--g-danger, #b3261e);">Delete</span>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 6. COMMON MATERIAL YOU DIALOGS             -->
+    <!-- ========================================== -->
+    <!-- New Folder Dialog -->
+    <dialog id="newFolderModal">
+        <div class="dialog-m3-icon">
+            <span class="material-symbols-outlined">create_new_folder</span>
+        </div>
+        <div class="dialog-title">New folder</div>
+        <input type="text" id="modalFolderNameInput" class="dialog-input" placeholder="Untitled folder"
+            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+        <div class="dialog-btn-group">
+            <button class="btn-dialog-cancel" id="btnCancelNewFolder" type="button">Cancel</button>
+            <button class="btn-dialog-confirm" id="btnConfirmNewFolder" type="button">Create</button>
+        </div>
+    </dialog>
+
+    <!-- Rename Folder Dialog -->
+    <dialog id="renameFolderModal">
+        <div class="dialog-m3-icon">
+            <span class="material-symbols-outlined">drive_file_rename_outline</span>
+        </div>
+        <div class="dialog-title">Rename</div>
+        <input type="text" id="modalRenameFolderNameInput" class="dialog-input" placeholder="Folder name"
+            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+        <div id="renameFolderErrorText"
+            style="color: var(--g-danger, #b3261e); font-size: 13px; margin-top: -12px; margin-bottom: 16px; display: none;">
+        </div>
+        <div class="dialog-btn-group">
+            <button class="btn-dialog-cancel" id="btnCancelRenameFolder" type="button">Cancel</button>
+            <button class="btn-dialog-confirm" id="btnConfirmRenameFolder" type="button">OK</button>
+        </div>
+    </dialog>
+
+    <!-- Rename File Dialog -->
+    <dialog id="renameFileModal">
+        <div class="dialog-m3-icon">
+            <span class="material-symbols-outlined">drive_file_rename_outline</span>
+        </div>
+        <div class="dialog-title">Rename</div>
+        <input type="text" id="modalRenameFileNameInput" class="dialog-input" placeholder="File name" autocomplete="off"
+            autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other">
+        <div id="renameFileErrorText"
+            style="color: var(--g-danger, #b3261e); font-size: 13px; margin-top: -12px; margin-bottom: 16px; display: none;">
+        </div>
+        <div class="dialog-btn-group">
+            <button class="btn-dialog-cancel" id="btnCancelRenameFile" type="button">Cancel</button>
+            <button class="btn-dialog-confirm" id="btnConfirmRenameFile" type="button">OK</button>
+        </div>
+    </dialog>
+
+    <!-- Change Password Dialog -->
+    <dialog id="pwModal">
+        <div class="dialog-m3-icon">
+            <span class="material-symbols-outlined">lock_reset</span>
+        </div>
+        <div class="dialog-title">Change Password</div>
+        <input type="password" id="newPassword" class="dialog-input" placeholder="New Password"
+            autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+        <input type="password" id="newPasswordConfirm" class="dialog-input" placeholder="Confirm Password"
+            autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+        <div class="dialog-btn-group">
+            <button id="btnCancelPw" class="btn-dialog-cancel" type="button">Cancel</button>
+            <button id="btnConfirmPw" class="btn-dialog-confirm" type="button">Save</button>
+        </div>
+    </dialog>
+
+    <!-- Trim Folder Dialog -->
+    <dialog id="trimFolderModal">
+        <div class="dialog-title">
+            <span class="material-symbols-outlined" style="color: var(--g-primary-blue, #0b57d0);">cleaning_services</span>
+            <span>Trim orphan files?</span>
+        </div>
+        <div class="dialog-body">
+            <div id="trimFolderDesc" style="margin-bottom: 12px; line-height: 1.5; color: var(--g-text-sub);">
+                Scan this folder on the server and remove unreferenced orphan files that are not mapped in your folder. Active files will remain completely untouched.
+            </div>
+            <div id="trimFolderStatusArea" style="display: none; margin-bottom: 12px;">
+                <div id="trimFolderStatusText" style="font-size: 13.5px; color: var(--g-text-main); margin-bottom: 8px;">Scanning files...</div>
+                <div class="m3-linear-progress">
+                    <div id="trimFolderProgressBar" class="m3-linear-bar indeterminate"></div>
+                </div>
+            </div>
+            <div id="trimFolderResultText" style="font-size: 13.5px; color: var(--g-text-main); display: none; line-height: 1.5;"></div>
+        </div>
+        <div class="dialog-actions" id="trimFolderActions">
+            <button id="btnCancelTrimFolder" class="btn-dialog-text" type="button">Cancel</button>
+            <button id="btnConfirmTrimFolder" class="btn-dialog-primary" type="button">Trim</button>
+        </div>
+    </dialog>
+
+    <!-- Share Folder Dialog -->
+    <dialog id="shareModal">
+        <div class="dialog-title">
+            <span class="material-symbols-outlined" style="color: var(--g-primary-blue);">share</span>
+            <span>Share Folder</span>
+        </div>
+        <div class="dialog-body">
+            <div id="shareModalDesc" style="margin-bottom: 16px;">Set a password to encrypt this folder's share token. Anyone with the token file and password can access the folder.</div>
+            <input type="password" id="sharePasswordInput" class="dialog-input" placeholder="Set share password"
+                autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
+                data-lpignore="true">
+            <div id="shareErrorText"
+                style="color: var(--g-danger); font-size: 13px; margin-top: -12px; margin-bottom: 8px; display: none;">
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button id="btnCancelShare" class="btn-dialog-text" type="button">Cancel</button>
+            <button id="btnConfirmShare" class="btn-dialog-primary" type="button">Share</button>
+        </div>
+    </dialog>
+
+    <!-- Import Share Password Dialog -->
+    <dialog id="importShareModal">
+        <div class="dialog-title">
+            <span class="material-symbols-outlined" style="color: var(--g-primary-blue);">key</span>
+            <span>Unlock Share Token</span>
+        </div>
+        <div class="dialog-body">
+            <div style="margin-bottom: 16px;">Enter the password to decrypt and import this folder share token.</div>
+            <input type="password" id="importPasswordInput" class="dialog-input" placeholder="Enter share password"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+            <div id="importErrorText"
+                style="color: var(--g-danger); font-size: 13px; margin-top: -12px; margin-bottom: 8px; display: none;">
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button id="btnCancelImportShare" class="btn-dialog-text" type="button">Cancel</button>
+            <button id="btnConfirmImportShare" class="btn-dialog-primary" type="button">Unlock</button>
+        </div>
+    </dialog>
+
+    <!-- Generic Confirm Dialog -->
+    <dialog id="confirmModal">
+        <div class="dialog-title">
+            <span class="material-symbols-outlined" id="confirmModalIcon"
+                style="color: var(--g-primary-blue);">help</span>
+            <span id="confirmModalTitle">Confirm</span>
+        </div>
+        <div class="dialog-body" id="confirmModalText"></div>
+        <div class="dialog-actions">
+            <button id="btnCancelConfirmModal" class="btn-dialog-text" type="button">Cancel</button>
+            <button id="btnActionConfirmModal" class="btn-dialog-primary" type="button">Confirm</button>
+        </div>
+    </dialog>
+
+    <!-- Notice Dialog -->
+    <dialog id="noticeModal">
+        <div class="dialog-title">
+            <span class="material-symbols-outlined" id="noticeIcon"
+                style="color: var(--g-primary-blue);">campaign</span>
+            <span id="noticeTitle">Notice</span>
+        </div>
+        <div id="noticeText" class="dialog-body"></div>
+        <div class="dialog-actions">
+            <button id="btnConfirmNotice" class="btn-dialog-primary" type="button">OK</button>
+        </div>
+    </dialog>
+
+    <!-- Invite Code Modal (Registration) -->
+    <dialog id="inviteModal">
+        <div class="dialog-title">
+            <span class="material-symbols-outlined" style="color: var(--g-primary-blue);">mail</span>
+            <span>Invite Code Required</span>
+        </div>
+        <div class="dialog-body">
+            <div style="margin-bottom: 16px; line-height: 1.5; color: var(--g-text-sub);">This MediaHub instance requires an invite code for new registrations. Please enter your invite code below:</div>
+            <input type="text" id="inviteCodeInput" class="dialog-input" placeholder="Enter invite code"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true">
+        </div>
+        <div class="dialog-actions">
+            <button id="btnCancelInvite" class="btn-dialog-text" type="button">Cancel</button>
+            <button id="btnConfirmInvite" class="btn-dialog-primary" type="button">Register</button>
+        </div>
+    </dialog>
+
+    <!-- ========================================== -->
+    <!-- 7. DRAG & DROP OVERLAY & UPLOAD WIDGET     -->
+    <!-- ========================================== -->
+    <div id="dragDropOverlay" class="drag-drop-overlay">
+        <div class="drag-drop-content">
+            <span class="material-symbols-outlined drag-drop-icon">cloud_upload</span>
+            <div class="drag-drop-title">Drop files to upload</div>
+            <div class="drag-drop-subtitle" id="dragDropSubtitle">Upload to current folder</div>
+        </div>
+    </div>
+
+    <!-- Google Drive Floating Upload Progress Widget -->
+    <div id="uploadProgressWidget" class="upload-progress-widget hidden">
+        <div class="upload-widget-header" id="uploadWidgetHeader">
+            <div class="upload-widget-title-group">
+                <span class="upload-widget-title" id="uploadWidgetTitle">1 upload complete</span>
+            </div>
+            <div class="upload-widget-actions">
+                <button class="widget-action-btn" id="btnMinimizeUploadWidget" type="button" title="Minimize / Expand">
+                    <span class="material-symbols-outlined" id="uploadWidgetChevron">keyboard_arrow_down</span>
+                </button>
+                <button class="widget-action-btn" id="btnCloseUploadWidget" type="button" title="Close">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+        </div>
+        <div class="upload-widget-body" id="uploadWidgetBody">
+            <div class="upload-file-list" id="uploadFileList"></div>
+        </div>
+    </div>
+
+    <!-- Libraries & Application Bootstrap -->
+    <script src="./js/engine/viewerjs.min.js"></script>
+    <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>

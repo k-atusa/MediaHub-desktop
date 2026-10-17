@@ -1,0 +1,841 @@
+:root {
+            /* Default: System Theme determined by prefers-color-scheme */
+            --preview-bg: #f8fafd;
+            --preview-topbar: #ffffff;
+            --preview-surface: #ffffff;
+            --preview-hover: #f0f4f9;
+            --preview-outline: #e0e2ec;
+            --preview-primary: #0b57d0;
+            --preview-text: #1f1f1f;
+            --preview-subtext: #5f6368;
+            --preview-danger: #b3261e;
+            --preview-nav-bg: rgba(255, 255, 255, 0.9);
+            --preview-nav-shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Automatic System Dark Theme */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --preview-bg: #0e0e0e;
+                --preview-topbar: #18191b;
+                --preview-surface: #1e1f20;
+                --preview-hover: #282a2c;
+                --preview-outline: #303134;
+                --preview-primary: #a8c7fa;
+                --preview-text: #e3e3e3;
+                --preview-subtext: #c4c7c5;
+                --preview-danger: #f2b8b5;
+                --preview-nav-bg: rgba(30, 31, 32, 0.85);
+                --preview-nav-shadow: rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* Explicit Dark Mode */
+        [data-theme="dark"] {
+            --preview-bg: #0e0e0e;
+            --preview-topbar: #18191b;
+            --preview-surface: #1e1f20;
+            --preview-hover: #282a2c;
+            --preview-outline: #303134;
+            --preview-primary: #a8c7fa;
+            --preview-text: #e3e3e3;
+            --preview-subtext: #c4c7c5;
+            --preview-danger: #f2b8b5;
+            --preview-nav-bg: rgba(30, 31, 32, 0.85);
+            --preview-nav-shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Explicit Light Mode */
+        [data-theme="light"] {
+            --preview-bg: #f8fafd;
+            --preview-topbar: #ffffff;
+            --preview-surface: #ffffff;
+            --preview-hover: #f0f4f9;
+            --preview-outline: #e0e2ec;
+            --preview-primary: #0b57d0;
+            --preview-text: #1f1f1f;
+            --preview-subtext: #5f6368;
+            --preview-danger: #b3261e;
+            --preview-nav-bg: rgba(255, 255, 255, 0.9);
+            --preview-nav-shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--preview-bg);
+            color: var(--preview-text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 1. Google Drive Preview Top Bar */
+        .preview-topbar {
+            height: 56px;
+            background-color: var(--preview-topbar);
+            border-bottom: 1px solid var(--preview-outline);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+            flex-shrink: 0;
+            gap: 12px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--preview-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+
+        .icon-btn:hover {
+            background-color: var(--preview-hover);
+        }
+
+        /* Google Drive Style File Name Display */
+        #txName {
+            color: var(--preview-text);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 0 8px;
+            max-width: 480px;
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            user-select: text;
+            cursor: default;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-danger:hover {
+            color: var(--preview-danger);
+            background-color: rgba(242, 184, 181, 0.15);
+        }
+
+        /* 2. Main Media Preview Canvas */
+        .preview-canvas {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 16px;
+        }
+
+        /* body-box (Dynamic in viewer.js) */
+        .body-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        video,
+        img {
+            max-width: 90vw;
+            max-height: 84vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: block;
+            margin: auto;
+        }
+
+        iframe {
+            width: 90vw;
+            height: 84vh;
+            border: none;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            width: 90vw;
+            height: 84vh;
+            background-color: var(--preview-topbar);
+            color: var(--preview-text);
+            border: 1px solid var(--preview-outline);
+            border-radius: 8px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 24px;
+            box-sizing: border-box;
+            outline: none;
+            resize: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        textarea:focus {
+            border-color: var(--preview-primary);
+        }
+
+        /* Unsupported File Preview Card (Google Drive Style) */
+        .unsupported-preview-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: var(--preview-surface);
+            border: 1px solid var(--preview-outline);
+            border-radius: 28px;
+            padding: 44px 32px;
+            max-width: 440px;
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+            box-sizing: border-box;
+        }
+
+        .unsupported-icon-box {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background-color: var(--preview-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .unsupported-icon {
+            font-size: 38px;
+            color: var(--preview-subtext);
+        }
+
+        .unsupported-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--preview-text);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .unsupported-msg {
+            font-size: 14px;
+            color: var(--preview-subtext);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .unsupported-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 28px;
+            background-color: var(--preview-bg);
+            border: 1px solid var(--preview-outline);
+            padding: 10px 20px;
+            border-radius: 12px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .unsupported-filename {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--preview-text);
+            max-width: 320px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unsupported-filesize {
+            font-size: 12px;
+            color: var(--preview-subtext);
+        }
+
+        .btn-unsupported-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 44px;
+            padding: 0 28px;
+            border-radius: 22px;
+            border: none;
+            background-color: var(--preview-primary);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14.5px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+        }
+
+        [data-theme="dark"] .btn-unsupported-download,
+        :root:not([data-theme="light"]) .btn-unsupported-download {
+            background-color: var(--preview-primary);
+            color: #062e6f;
+        }
+
+        .btn-unsupported-download:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-unsupported-download:active {
+            transform: translateY(0);
+        }
+
+        .btn-unsupported-download .material-symbols-outlined {
+            font-size: 20px;
+        }
+
+        /* Download progress floating pill toast */
+        .download-progress-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: var(--preview-surface);
+            color: var(--preview-text);
+            border: 1px solid var(--preview-outline);
+            border-radius: 24px;
+            padding: 16px 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            font-size: 14.5px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+            animation: m3DialogPop 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .spin-icon {
+            font-size: 22px;
+            color: var(--preview-primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 5. Google Drive Audio Player Card */
+        .audio-player-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: var(--preview-surface);
+            border: 1px solid var(--preview-outline);
+            border-radius: 28px;
+            padding: 44px 36px;
+            max-width: 480px;
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+            box-sizing: border-box;
+        }
+
+        .audio-hero-icon-box {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background-color: var(--preview-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .audio-hero-icon {
+            font-size: 44px;
+            color: var(--preview-primary);
+        }
+
+        .audio-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--preview-text);
+            margin-bottom: 6px;
+            max-width: 380px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .audio-meta {
+            font-size: 13px;
+            color: var(--preview-subtext);
+            margin-bottom: 24px;
+        }
+
+        .audio-element {
+            width: 100%;
+            max-width: 400px;
+            height: 48px;
+            border-radius: 24px;
+            outline: none;
+        }
+
+        /* 3. Google Drive Floating Side Navigation Buttons */
+        .btn-floating-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--preview-nav-bg);
+            border: 1px solid var(--preview-outline);
+            color: var(--preview-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: background-color 0.15s, transform 0.15s, filter 0.15s;
+            box-shadow: 0 2px 8px var(--preview-nav-shadow);
+        }
+
+        .btn-floating-nav:hover {
+            background-color: var(--preview-hover);
+            filter: brightness(1.1);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        #btnPrevFile {
+            left: 20px;
+        }
+
+        #btnNextFile {
+            right: 20px;
+        }
+
+        /* Viewer.js Material You & Google Drive Theme Integration */
+        #viewBody > img {
+            display: none !important;
+        }
+
+        .viewer-container {
+            background-color: transparent !important;
+        }
+
+        .viewer-backdrop {
+            background-color: transparent !important;
+        }
+
+        .viewer-canvas > img {
+            border-radius: 6px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .viewer-footer {
+            bottom: 24px;
+        }
+
+        .viewer-toolbar > ul {
+            background-color: var(--preview-nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--preview-outline);
+            border-radius: 28px;
+            padding: 6px 12px;
+            box-shadow: 0 4px 16px var(--preview-nav-shadow);
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            margin: 0 auto;
+        }
+
+        .viewer-toolbar > ul > li {
+            background-color: transparent;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+        }
+
+        .viewer-toolbar > ul > li:hover {
+            background-color: var(--preview-hover);
+            transform: scale(1.08);
+        }
+
+        .viewer-toolbar > ul > li:focus {
+            box-shadow: none;
+        }
+
+        /* In light mode, invert white icons so they are dark grey */
+        .viewer-toolbar > ul > li::before {
+            filter: invert(0.8);
+            margin: 0 !important;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .viewer-toolbar > ul > li::before {
+                filter: none;
+            }
+        }
+
+        [data-theme="dark"] .viewer-toolbar > ul > li::before {
+            filter: none;
+        }
+
+        .viewer-tooltip {
+            background-color: var(--preview-nav-bg);
+            color: var(--preview-text);
+            border: 1px solid var(--preview-outline);
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            font-weight: 500;
+            box-shadow: 0 4px 12px var(--preview-nav-shadow);
+        }
+
+        /* Viewer Topbar 3-dots Menu Button */
+        .viewer-more-btn {
+            display: none;
+        }
+
+        /* Mobile / Tablet (<768px) */
+        @media (max-width: 768px) {
+            .topbar-actions {
+                display: none !important;
+            }
+
+            .viewer-more-btn {
+                display: flex !important;
+            }
+
+            #txName {
+                max-width: none !important;
+            }
+        }
+
+        /* Viewer Mobile Action Menu (Popup) */
+        .viewer-action-menu {
+            position: fixed;
+            min-width: 180px;
+            max-width: 240px;
+            background-color: var(--preview-surface);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+            border: 1px solid var(--preview-outline);
+            padding: 8px;
+            display: none;
+            z-index: 3000;
+            animation: viewerMenuFadeIn 0.15s cubic-bezier(0.2, 0, 0, 1);
+            box-sizing: border-box;
+        }
+
+        .viewer-action-menu.open {
+            display: block;
+        }
+
+        @keyframes viewerMenuFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .viewer-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            height: 44px;
+            padding: 0 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--preview-text);
+            transition: background-color 0.15s, color 0.15s;
+        }
+
+        .viewer-menu-item:hover,
+        .viewer-menu-item:active {
+            background-color: var(--preview-hover);
+            color: var(--preview-primary);
+        }
+
+        .viewer-menu-item.danger-item {
+            color: var(--preview-danger, #b3261e);
+        }
+
+        .viewer-menu-item.danger-item:hover,
+        .viewer-menu-item.danger-item:active {
+            background-color: rgba(179, 38, 30, 0.12);
+            color: var(--preview-danger, #b3261e);
+        }
+
+        .viewer-menu-item .menu-icon {
+            font-size: 20px;
+            color: inherit;
+        }
+
+        .viewer-menu-item .menu-label {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .dialog-input {
+            width: 100%;
+            height: 48px;
+            background-color: var(--preview-topbar);
+            border: 1px solid var(--preview-outline);
+            border-radius: 14px;
+            color: var(--preview-text);
+            font-family: inherit;
+            font-size: 15px;
+            padding: 0 16px;
+            box-sizing: border-box;
+            outline: none;
+            margin-bottom: 16px;
+            transition: border-color 0.15s;
+        }
+
+        .dialog-input:focus {
+            border-color: var(--preview-primary);
+        }
+
+        /* Mobile (<600px) */
+        @media (max-width: 599px) {
+            .preview-topbar {
+                padding: 0 10px;
+            }
+
+            #txName {
+                font-size: 14px;
+            }
+
+            .btn-floating-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            #btnPrevFile {
+                left: 8px;
+            }
+
+            #btnNextFile {
+                right: 8px;
+            }
+
+            video,
+            img,
+            iframe,
+            textarea {
+                max-width: 96vw;
+                max-height: 80vh;
+            }
+
+            .audio-player-card {
+                padding: 32px 20px;
+                width: 94%;
+            }
+        }
+
+        /* Material You (M3) Dialogs */
+        dialog {
+            background-color: var(--preview-surface);
+            color: var(--preview-text);
+            border: 1px solid var(--preview-outline);
+            border-radius: 28px;
+            padding: 28px;
+            max-width: 440px;
+            width: 90%;
+            margin: auto;
+            outline: none;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+            animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+            box-sizing: border-box;
+        }
+
+        dialog:not([open]) {
+            display: none;
+        }
+
+        @keyframes m3DialogPop {
+            from {
+                transform: scale(0.92);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+        }
+
+        .dialog-title {
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: -0.2px;
+            color: var(--preview-text);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dialog-title .material-symbols-outlined {
+            font-size: 26px;
+        }
+
+        .dialog-body {
+            font-size: 14.5px;
+            color: var(--preview-subtext);
+            line-height: 1.55;
+            margin-bottom: 24px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-dialog-text {
+            background: transparent;
+            color: var(--preview-primary);
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0 20px;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .btn-dialog-text:hover {
+            background-color: rgba(11, 87, 208, 0.08);
+        }
+
+        [data-theme="dark"] .btn-dialog-text:hover,
+        :root:not([data-theme="light"]) .btn-dialog-text:hover {
+            background-color: rgba(168, 199, 250, 0.12);
+        }
+
+        .btn-dialog-primary {
+            background-color: var(--preview-primary);
+            color: #ffffff;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0 24px;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.15s, box-shadow 0.15s;
+        }
+
+        [data-theme="dark"] .btn-dialog-primary,
+        :root:not([data-theme="light"]) .btn-dialog-primary {
+            color: #062e6f;
+        }
+
+        .btn-dialog-primary:hover {
+            opacity: 0.92;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-dialog-danger {
+            background-color: #b3261e;
+            color: #ffffff;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0 24px;
+            height: 40px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.15s, box-shadow 0.15s;
+        }
+
+        [data-theme="dark"] .btn-dialog-danger,
+        :root:not([data-theme="light"]) .btn-dialog-danger {
+            background-color: #f2b8b5;
+            color: #601410;
+        }
+
+        .btn-dialog-danger:hover {
+            background-color: #8c1d18;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .btn-dialog-danger:hover,
+        :root:not([data-theme="light"]) .btn-dialog-danger:hover {
+            background-color: #f9dedc;
+        }
