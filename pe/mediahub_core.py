@@ -1,4 +1,5 @@
 import os
+import io
 import time
 import tempfile
 import requests
@@ -8,6 +9,90 @@ import cv2
 from engine import Bencode, Bencrypt, Opsec
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+CHUNK_SIZE = 2 * 1024 * 1024  # 2MB
+
+
+class ChunkedRangeReader(io.RawIOBase):
+    """Streams data from server in 2MB chunks via HTTP Range requests."""
+    def __init__(self, url, total_size, chunk_size=CHUNK_SIZE, verify_ssl=True, headers=None, prog_cb=None):
+        super().__init__()
+        self.url = url
+        self.total_size = total_size
+        self.chunk_size = chunk_size
+        self.verify_ssl = verify_ssl
+        self.headers = dict(headers or {})
+        self.prog_cb = prog_cb
+        self.offset = 0
+        self.buffer = bytearray()
+        self.t0 = time.monotonic()
+        self.wb = 0
+        self.session = requests.Session()
+
+    def readable(self):
+        return True
+
+    def readinto(self, b):
+        needed = len(b)
+        while len(self.buffer) < needed and self.offset < self.total_size:
+            fetch_size = min(self.chunk_size, self.total_size - self.offset)
+            fetch_end = self.offset + fetch_size - 1
+            req_headers = dict(self.headers)
+            req_headers['Range'] = f"bytes={self.offset}-{fetch_end}"
+            res = self.session.get(self.url, headers=req_headers, verify=self.verify_ssl)
+            if res.status_code not in [200, 206]:
+                raise Exception(f"Download failed: code {res.status_code}")
+            data = res.content
+            if len(data) != fetch_size:
+                raise Exception(f"Download chunk size mismatch: expected {fetch_size}, got {len(data)}")
+            self.buffer.extend(data)
+            self.offset += len(data)
+            self.wb += len(data)
+            now = time.monotonic()
+            el = now - self.t0
+            if el >= 0.5 and self.prog_cb:
+                self.prog_cb(self.offset, self.total_size, self.wb / el)
+                self.t0 = now
+                self.wb = 0
+
+        take = min(needed, len(self.buffer))
+        b[:take] = self.buffer[:take]
+        del self.buffer[:take]
+        return take
+
+    def read(self, size=-1):
+        if size is None or size < 0:
+            size = self.total_size - (self.offset - len(self.buffer))
+        while len(self.buffer) < size and self.offset < self.total_size:
+            fetch_size = min(self.chunk_size, self.total_size - self.offset)
+            fetch_end = self.offset + fetch_size - 1
+            req_headers = dict(self.headers)
+            req_headers['Range'] = f"bytes={self.offset}-{fetch_end}"
+            res = self.session.get(self.url, headers=req_headers, verify=self.verify_ssl)
+            if res.status_code not in [200, 206]:
+                raise Exception(f"Download failed: code {res.status_code}")
+            data = res.content
+            if len(data) != fetch_size:
+                raise Exception(f"Download chunk size mismatch: expected {fetch_size}, got {len(data)}")
+            self.buffer.extend(data)
+            self.offset += len(data)
+            self.wb += len(data)
+            now = time.monotonic()
+            el = now - self.t0
+            if el >= 0.5 and self.prog_cb:
+                self.prog_cb(self.offset, self.total_size, self.wb / el)
+                self.t0 = now
+                self.wb = 0
+
+        take = min(size, len(self.buffer))
+        out = bytes(self.buffer[:take])
+        del self.buffer[:take]
+        return out
+
+    def close(self):
+        self.session.close()
+        super().close()
+
 
 class MHClient:
     def __init__(self, url, user, pw, verify_ssl=True):
@@ -53,6 +138,8 @@ class MHClient:
         return self.fldMap
 
     def mkFld(self, name):
+        if not self.uHash:
+            raise Exception("Not authenticated")
         if name in self.fldMap:
             raise Exception("Folder name already exists!")
         self.fldMap[name] = Bencrypt.Random(32) + Bencrypt.Random(12)
@@ -106,6 +193,8 @@ class MHClient:
         return self._mkThumb(frame) if ret else None
 
     def upFile(self, fPid, fKey, flMap, path, progCb=None):
+        if not self.uHash:
+            raise Exception("Not authenticated")
         if not os.path.isfile(path):
             raise Exception("File not found")
         name = os.path.basename(path)
@@ -124,9 +213,13 @@ class MHClient:
             thumb = self.imgThumb(path)
         if thumb:
             sm = Bencrypt.SymMaster("gcm1", fk[:32])
-            requests.post(f"{self.url}/api/media/{fPid}/{fpid}/thumb",
-                          data=sm.EnBin(thumb),
-                          headers={'X-User-Hash': self.uHash}, verify=self.verify_ssl)
+            res_thumb = requests.post(
+                f"{self.url}/api/media/{fPid}/{fpid}/thumb",
+                data=sm.EnBin(thumb),
+                headers={'X-User-Hash': self.uHash},
+                verify=self.verify_ssl)
+            if res_thumb.status_code != 200:
+                raise Exception(f"Thumbnail upload failed: code {res_thumb.status_code}")
 
         # encrypt and upload media
         smx = Bencrypt.SymMaster("gcmx1", fk[:32])
@@ -141,29 +234,48 @@ class MHClient:
                 Opsec.PadFile(tmp, padSz)
             tmp.seek(0)
 
-            class _Wrap:
-                def __init__(s, f, tot, cb):
-                    s._f, s._tot, s._sent = f, tot, 0
-                    s._cb, s._t0, s._wb = cb, time.monotonic(), 0
-                def read(s, sz=-1):
-                    c = s._f.read(sz)
-                    if c:
-                        s._sent += len(c); s._wb += len(c)
-                        now = time.monotonic(); el = now - s._t0
-                        if el >= 0.5 and s._cb:
-                            s._cb(s._sent, s._tot, s._wb / el)
-                            s._t0 = now; s._wb = 0
-                    return c
-                def __len__(s):
-                    return s._tot
+            offset = 0
+            t0 = time.monotonic()
+            wb = 0
 
-            res = requests.post(
-                f"{self.url}/api/media/{fPid}/{fpid}/dat",
-                data=_Wrap(tmp, total, progCb),
-                headers={'Content-Length': str(total), 'X-User-Hash': self.uHash},
-                verify=self.verify_ssl)
-            if res.status_code != 200:
-                raise Exception(f"Upload failed: code {res.status_code}")
+            if total == 0:
+                res = requests.post(
+                    f"{self.url}/api/media/{fPid}/{fpid}/dat",
+                    data=b"",
+                    headers={
+                        'Content-Length': '0',
+                        'X-Upload-Offset': '0',
+                        'X-User-Hash': self.uHash
+                    },
+                    verify=self.verify_ssl)
+                if res.status_code != 200:
+                    raise Exception(f"Upload failed: code {res.status_code}")
+            else:
+                while offset < total:
+                    chunk = tmp.read(CHUNK_SIZE)
+                    if not chunk:
+                        break
+                    c_len = len(chunk)
+                    res = requests.post(
+                        f"{self.url}/api/media/{fPid}/{fpid}/dat",
+                        data=chunk,
+                        headers={
+                            'Content-Length': str(c_len),
+                            'X-Upload-Offset': str(offset),
+                            'X-User-Hash': self.uHash
+                        },
+                        verify=self.verify_ssl)
+                    if res.status_code != 200:
+                        raise Exception(f"Upload failed: code {res.status_code}")
+                    offset += c_len
+                    wb += c_len
+                    now = time.monotonic()
+                    el = now - t0
+                    if el >= 0.5 and progCb:
+                        progCb(offset, total, wb / el)
+                        t0 = now
+                        wb = 0
+
             if progCb:
                 progCb(total, total, 0)
 
@@ -173,23 +285,48 @@ class MHClient:
         res = requests.post(
             f"{self.url}/api/storage/{fPid}/names",
             data=sm.EnBin(Opsec.EncodeCfg(flMap)),
-            headers={'X-User-Hash': self.uHash}, verify=self.verify_ssl)
+            headers={'X-User-Hash': self.uHash},
+            verify=self.verify_ssl)
         if res.status_code != 200:
             raise Exception(f"Failed to sync metadata: code {res.status_code}")
         return True
 
-    def dnFile(self, fPid, flInfo, name, outDir):
+    def dnFile(self, fPid, flInfo, name, outDir, progCb=None):
+        if not self.uHash:
+            raise Exception("Not authenticated")
         fk = flInfo[:44]
         origSz = Opsec.DecodeInt(flInfo[44:52], False)
         fpid = self.objPid(fk)
         smx = Bencrypt.SymMaster("gcmx1", fk[:32])
         ciphSz = smx.AfterSize(origSz)
-        res = requests.get(f"{self.url}/api/media/{fPid}/{fpid}/dat",
-                           stream=True, verify=self.verify_ssl)
-        if res.status_code in [200, 206]:
-            out = os.path.join(outDir, name)
+
+        url = f"{self.url}/api/media/{fPid}/{fpid}/dat"
+        headers = {}
+        if self.uHash:
+            headers['X-User-Hash'] = self.uHash
+
+        reader = ChunkedRangeReader(
+            url=url,
+            total_size=ciphSz,
+            chunk_size=CHUNK_SIZE,
+            verify_ssl=self.verify_ssl,
+            headers=headers,
+            prog_cb=progCb
+        )
+
+        out = os.path.join(outDir, name)
+        try:
             with open(out, "wb") as f:
-                smx.DeFile(res.raw, ciphSz, f)
+                smx.DeFile(reader, ciphSz, f)
+            if progCb:
+                progCb(ciphSz, ciphSz, 0)
             return out
-        else:
-            raise Exception(f"Download failed: {res.status_code}")
+        except Exception:
+            if os.path.exists(out):
+                try:
+                    os.remove(out)
+                except Exception:
+                    pass
+            raise
+        finally:
+            reader.close()

@@ -348,6 +348,7 @@ class WkUpload(WkBase):
 
 class WkDown(WkBase):
     success = pyqtSignal(str)
+    progress = pyqtSignal(int, int, float)
 
     def __init__(self, cli, fPid, flInfo, name, outDir):
         super().__init__()
@@ -359,7 +360,9 @@ class WkDown(WkBase):
 
     def run(self):
         try:
-            self.success.emit(self.cli.dnFile(self.fPid, self.flInfo, self.name, self.outDir))
+            self.success.emit(self.cli.dnFile(
+                self.fPid, self.flInfo, self.name, self.outDir,
+                progCb=lambda s, t, spd: self.progress.emit(s, t, spd)))
         except Exception as e:
             self.error.emit(str(e))
 
@@ -379,7 +382,10 @@ class WkThumb(WkBase):
             import requests
             from engine import Bencrypt
             url = f"{self.cli.url}/api/media/{self.fPid}/{self.fpid}/thumb"
-            res = requests.get(url, verify=self.cli.verify_ssl)
+            headers = {}
+            if getattr(self.cli, "uHash", None):
+                headers["X-User-Hash"] = self.cli.uHash
+            res = requests.get(url, headers=headers, verify=self.cli.verify_ssl)
             if res.status_code == 200 and res.content:
                 sm = Bencrypt.SymMaster("gcm1", self.fkBytes[:32])
                 raw = sm.DeBin(res.content)
@@ -1348,16 +1354,30 @@ class MHApp(QMainWindow):
         outDir = QFileDialog.getExistingDirectory(self, "Select Download Directory")
         if outDir:
             self._setLoad(True)
+            self.upStatLbl.setVisible(True)
+            self.upStatLbl.setText("Downloading... 0%")
+            self.progBar.setValue(0)
             row = sel[0].row()
             name = self.fileTbl.item(row, 1).text()
             flInfo = self.curFiles[name]
             self._wk = WkDown(self.cli, self.curPid, flInfo, name, outDir)
             self._wk.success.connect(self._onDnDone)
             self._wk.error.connect(self._onOpErr)
+            self._wk.progress.connect(self._onDnProg)
             self._wk.start()
+
+    def _onDnProg(self, rcv, tot, speed):
+        if tot > 0:
+            pct = int((rcv / tot) * 100)
+            self.progBar.setValue(pct)
+            if speed > 0:
+                self.upStatLbl.setText(f"Downloading... {pct}%  |  {speed / (1024*1024):.1f} MB/s")
+            else:
+                self.upStatLbl.setText(f"Downloading... {pct}%")
 
     def _onDnDone(self, path):
         self._setLoad(False)
+        self.upStatLbl.setVisible(False)
         QMessageBox.information(self, "Success", f"Downloaded to:\n{path}")
 
     def doView(self):
