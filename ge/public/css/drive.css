@@ -1,0 +1,2273 @@
+/* ==========================================================================
+   DRIVE HEADER AND SEARCH
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Arrange the relevant screen header and controls. */
+.drive-header {
+    height: 64px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--g-bg);
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--g-border-subtle);
+    gap: 16px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Arrange the relevant screen header and controls. */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--g-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.menu-btn:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Define the layout or appearance of this UI element. */
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Define the layout or appearance of this UI element. */
+.nav-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    display: block;
+}
+
+/* Define the layout or appearance of this UI element. */
+.app-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    letter-spacing: -0.2px;
+}
+
+/* ===== Search Bar ===== */
+/* Style search input and related controls. */
+.header-search-box {
+    flex: 1;
+    max-width: 720px;
+    height: 46px;
+    background-color: var(--g-search-bg);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.header-search-box:focus-within {
+    background-color: var(--g-surface);
+    box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.2), 0 2px 8px 4px rgba(60, 64, 67, 0.1);
+}
+
+/* Style search input and related controls. */
+.search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--g-text-main);
+    outline: none;
+}
+
+/* Style search input and related controls. */
+.search-input::placeholder {
+    color: var(--g-text-muted);
+}
+
+/* Style search input and related controls. */
+.search-clear-btn {
+    background: transparent;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--g-text-muted);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.search-clear-btn:hover {
+    background-color: var(--g-hover-bg);
+    color: var(--g-text-main);
+}
+
+/* ===== Header Right Actions ===== */
+/* Arrange the relevant screen header and controls. */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Style an actionable button or control. */
+.header-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--g-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+    position: relative;
+}
+
+/* Style the corresponding interactive or UI state. */
+.header-icon-btn:hover {
+    background-color: var(--g-hover-bg);
+    color: var(--g-text-main);
+}
+
+/* Style search input and related controls. */
+.mobile-search-toggle {
+    display: none;
+}
+
+/* Style search input and related controls. */
+.mobile-search-back-btn {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--g-text-main);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.mobile-search-back-btn:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* ==========================================================================
+   ACCOUNT PROFILE AND MENU
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Define menu layout, items, and interaction affordances. */
+.account-menu-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.profile-avatar-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.profile-avatar-btn:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--g-fab-bg);
+    color: var(--g-fab-text);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.5px;
+    user-select: none;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.account-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 260px;
+    background-color: var(--m3-surface-container);
+    border-radius: 20px;
+    box-shadow: var(--m3-elevation-widget);
+    border: 1px solid var(--g-border-subtle);
+    padding: 8px;
+    display: none;
+    z-index: 1000;
+    animation: menuFadeIn 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Style the corresponding interactive or UI state. */
+.account-dropdown-menu.open {
+    display: block;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.account-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px 12px 14px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.account-avatar-large {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--g-fab-bg);
+    color: var(--g-fab-text);
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+/* Define the layout or appearance of this UI element. */
+.account-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Define the layout or appearance of this UI element. */
+.account-username {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--g-text-main);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Define the layout or appearance of this UI element. */
+.account-badge {
+    font-size: 11.5px;
+    color: var(--g-text-muted);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   DRIVE LAYOUT AND SIDEBAR
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Define the layout or appearance of this UI element. */
+.drive-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* ===== Sidebar ===== */
+/* Arrange folder navigation and folder-related controls. */
+.drive-sidebar {
+    width: 250px;
+    background-color: var(--g-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px 20px 16px;
+    gap: 16px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--g-border-subtle);
+    transition: width 0.22s cubic-bezier(0.2, 0, 0, 1), padding 0.22s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+    overflow: hidden;
+}
+
+/* Style the corresponding interactive or UI state. */
+.sidebar-collapsed .drive-sidebar {
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border-right: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.mobile-drawer-header {
+    display: none;
+}
+
+/* ===== Mobile Sidebar Backdrop ===== */
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1040;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+/* Style the corresponding interactive or UI state. */
+.sidebar-backdrop.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   NEW ITEM MENU
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Define the layout or appearance of this UI element. */
+.new-action-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Style an actionable button or control. */
+.btn-new-drive {
+    width: 100%;
+    height: 48px;
+    border-radius: 16px;
+    background-color: var(--g-surface);
+    color: var(--g-text-main);
+    border: 1px solid var(--g-border-subtle);
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 16px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.25), 0 1px 2px rgba(60, 64, 67, 0.15);
+    transition: background-color 0.15s, box-shadow 0.15s, border-color 0.15s;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-new-drive:hover {
+    background-color: var(--g-hover-bg);
+    box-shadow: 0 2px 6px 2px rgba(60, 64, 67, 0.2);
+}
+
+/* Style an actionable button or control. */
+.btn-new-drive .plus-icon {
+    font-size: 24px;
+    color: var(--g-primary-blue);
+}
+
+/* ===== Dropdown Popup Menu ===== */
+/* Define menu layout, items, and interaction affordances. */
+.new-drive-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--m3-surface-container);
+    border-radius: 20px;
+    box-shadow: var(--m3-elevation-widget);
+    border: 1px solid var(--g-border-subtle);
+    padding: 8px;
+    display: none;
+    z-index: 1000;
+    animation: menuFadeIn 0.15s cubic-bezier(0.2, 0, 0, 1);
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.new-drive-menu.open {
+    display: block;
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.drive-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    transition: background-color 0.15s, color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.drive-menu-item:hover {
+    background-color: var(--g-hover-bg);
+    color: var(--m3-primary);
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.drive-menu-item .menu-icon {
+    font-size: 20px;
+    color: inherit;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.drive-menu-item .menu-label {
+    flex: 1;
+    font-weight: 500;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.drive-menu-divider {
+    height: 1px;
+    background-color: var(--g-border-subtle);
+    margin: 6px 4px;
+}
+
+/* ==========================================================================
+   SIDEBAR FOLDER NAVIGATION
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
+    padding: 0 14px;
+    color: var(--g-text-main);
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.15s;
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.sidebar-section-header:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Style the corresponding interactive or UI state. */
+.sidebar-section-header.active {
+    background-color: var(--g-active-bg);
+    color: var(--g-fab-text);
+    font-weight: 600;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-folder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--g-border-subtle) transparent;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-folder-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-folder-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.sidebar-folder-list::-webkit-scrollbar-thumb {
+    background-color: var(--g-border-subtle);
+    border-radius: 4px;
+}
+
+/* Style the corresponding interactive or UI state. */
+.sidebar-folder-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--g-text-muted);
+}
+
+/* ===== Individual Folder Item ===== */
+/* Arrange folder navigation and folder-related controls. */
+.nav-folder-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 38px;
+    min-height: 38px;
+    flex-shrink: 0;
+    padding: 0 6px 0 14px;
+    border-radius: 19px;
+    color: var(--g-text-main);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s, color 0.15s;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.nav-folder-item:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Style the corresponding interactive or UI state. */
+.nav-folder-item.active {
+    background-color: var(--g-active-bg);
+    color: var(--g-fab-text);
+    font-weight: 600;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.nav-folder-item .material-symbols-outlined.nav-folder-icon {
+    font-size: 19px;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.folder-name-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.folder-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: opacity 0.15s, background-color 0.15s;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.folder-more-btn .material-symbols-outlined {
+    font-size: 18px !important;
+    color: inherit;
+}
+
+/* Style the corresponding interactive or UI state. */
+.nav-folder-item:hover .folder-more-btn,
+.nav-folder-item.active .folder-more-btn,
+.root-folder-card:hover .folder-more-btn,
+.folder-more-btn.open {
+    opacity: 1;
+}
+
+/* Style the corresponding interactive or UI state. */
+.folder-more-btn:hover,
+.folder-more-btn.open {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .folder-more-btn:hover,
+[data-theme="dark"] .folder-more-btn.open,
+:root:not([data-theme="light"]) .folder-more-btn:hover,
+:root:not([data-theme="light"]) .folder-more-btn.open {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (hover: none) {
+
+    /* Arrange folder navigation and folder-related controls. */
+    .folder-more-btn {
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   FOLDER AND FILE CONTEXT MENUS
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Arrange folder navigation and folder-related controls. */
+.folder-action-menu {
+    position: fixed;
+    min-width: 180px;
+    max-width: 240px;
+    width: max-content;
+    right: auto;
+    z-index: 3000;
+    top: 0;
+    left: 0;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.file-action-menu {
+    position: fixed;
+    min-width: 180px;
+    max-width: 240px;
+    width: max-content;
+    right: auto;
+    z-index: 3000;
+    top: 0;
+    left: 0;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.file-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--g-text-muted);
+    cursor: pointer;
+    opacity: 0.7;
+    flex-shrink: 0;
+    transition: opacity 0.15s, background-color 0.15s, color 0.15s;
+    padding: 0;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.file-more-btn .material-symbols-outlined {
+    font-size: 20px !important;
+    color: inherit;
+}
+
+/* Style the corresponding interactive or UI state. */
+.media-card:hover .file-more-btn,
+.file-more-btn:hover,
+.file-more-btn.open {
+    opacity: 1;
+    color: var(--g-text-main);
+}
+
+/* Style the corresponding interactive or UI state. */
+.file-more-btn:hover,
+.file-more-btn.open {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .file-more-btn:hover,
+[data-theme="dark"] .file-more-btn.open,
+:root:not([data-theme="light"]) .file-more-btn:hover,
+:root:not([data-theme="light"]) .file-more-btn.open {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (hover: none),
+(max-width: 768px) {
+
+    /* Present file entries, thumbnails, or list layout. */
+    .file-more-btn {
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   MEDIA FILE GRID AND VIEW MODES
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid:not(.view-details):not(.list-view) .media-card {
+    position: relative;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid:not(.view-details):not(.list-view) .file-more-btn {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    z-index: 2;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid:not(.view-details):not(.list-view) .file-title {
+    padding: 10px 38px 10px 12px;
+}
+
+/* ===== In List View ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-details .file-more-btn,
+.media-grid.list-view .file-more-btn {
+    position: static;
+}
+
+/* ==========================================================================
+   WORKSPACE AND BREADCRUMBS
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Define the layout or appearance of this UI element. */
+.drive-workspace {
+    flex: 1;
+    background-color: var(--g-bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 12px 24px 24px 16px;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+/* ===== Workspace Top Bar (Breadcrumb + Actions) ===== */
+/* Define the layout or appearance of this UI element. */
+.workspace-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.breadcrumb-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.breadcrumb-trail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.breadcrumb-link {
+    color: var(--g-primary-blue);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Define the layout or appearance of this UI element. */
+.breadcrumb-separator {
+    color: var(--g-text-muted);
+}
+
+/* Define the layout or appearance of this UI element. */
+.breadcrumb-current {
+    color: var(--g-text-main);
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.workspace-folder-title {
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--g-text-main);
+    letter-spacing: -0.3px;
+}
+
+/* ===== Workspace Right Action Buttons ===== */
+/* Define the layout or appearance of this UI element. */
+.workspace-action-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Style an actionable button or control. */
+.top-action-btn {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--g-primary-blue);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.top-action-btn:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Style an actionable button or control. */
+.top-action-btn .material-symbols-outlined {
+    font-size: 19px;
+    color: var(--g-primary-blue);
+}
+
+/* ==========================================================================
+   VIEW, SORT, AND FILTER MENUS
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Present keyword filtering controls and selected filters. */
+.sort-action-wrapper,
+.view-action-wrapper,
+.filter-action-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.sort-dropdown-menu,
+.view-dropdown-menu,
+.filter-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    left: auto;
+    background-color: var(--m3-surface-container);
+    border-radius: 16px;
+    box-shadow: var(--m3-elevation-widget);
+    border: 1px solid var(--g-border-subtle);
+    padding: 6px;
+    display: none;
+    z-index: 1000;
+    animation: menuFadeIn 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Style the corresponding interactive or UI state. */
+.sort-dropdown-menu.open,
+.view-dropdown-menu.open,
+.filter-dropdown-menu.open {
+    display: block;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.view-dropdown-menu {
+    min-width: 220px;
+    width: max-content;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.sort-dropdown-menu {
+    min-width: 240px;
+    width: max-content;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-dropdown-menu {
+    min-width: 260px;
+    max-width: 320px;
+    width: max-content;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.sort-menu-header,
+.view-menu-header {
+    display: none;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--g-text-muted);
+    padding: 6px 12px 4px 12px;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.sort-menu-item,
+.view-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 38px;
+    padding: 0 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    transition: background-color 0.15s, color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.sort-menu-item:hover,
+.view-menu-item:hover {
+    background-color: var(--g-hover-bg);
+    color: var(--m3-primary);
+}
+
+/* Style the corresponding interactive or UI state. */
+.sort-menu-item.active,
+.view-menu-item.active {
+    background-color: var(--m3-primary-container, #d3e3fd);
+    color: var(--m3-primary, #0b57d0);
+    font-weight: 600;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .sort-menu-item.active,
+[data-theme="dark"] .view-menu-item.active,
+:root:not([data-theme="light"]) .sort-menu-item.active,
+:root:not([data-theme="light"]) .view-menu-item.active {
+    background-color: #004a77;
+    color: #d3e3fd;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.sort-menu-item .menu-icon,
+.view-menu-item .menu-icon {
+    font-size: 18px;
+    color: inherit;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.sort-menu-item .menu-label,
+.view-menu-item .menu-label {
+    flex: 1;
+    font-weight: inherit;
+    white-space: nowrap;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.sort-menu-item .check-icon,
+.view-menu-item .check-icon {
+    font-size: 18px;
+    color: inherit;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.sort-menu-item.active .check-icon,
+.view-menu-item.active .check-icon {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   ROOT FOLDER GRID
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    overflow-y: auto;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-header {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--g-text-muted);
+    margin-bottom: 14px;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-card {
+    background-color: var(--g-card-bg);
+    border: 1px solid var(--g-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.root-folder-card:hover {
+    background-color: var(--g-hover-bg);
+    border-color: var(--g-primary-blue);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-card .material-symbols-outlined {
+    font-size: 24px;
+    color: var(--g-primary-blue);
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-card .folder-more-btn {
+    margin-left: auto;
+    color: var(--g-text-muted);
+}
+
+/* Arrange folder navigation and folder-related controls. */
+.root-folder-card .folder-more-btn .material-symbols-outlined {
+    font-size: 18px !important;
+    color: var(--g-text-muted);
+}
+
+/* Style the corresponding interactive or UI state. */
+.root-folder-card .folder-more-btn:hover .material-symbols-outlined,
+.root-folder-card .folder-more-btn.open .material-symbols-outlined {
+    color: var(--g-text-main);
+}
+
+/* ==========================================================================
+   EMPTY FOLDER STATES
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Define the layout or appearance of this UI element. */
+.empty-state-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 16px;
+    padding: 40px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.empty-cloud-icon {
+    font-size: 88px;
+    color: var(--g-text-muted);
+    user-select: none;
+}
+
+/* Define the layout or appearance of this UI element. */
+.empty-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--g-text-main);
+}
+
+/* Define the layout or appearance of this UI element. */
+.empty-subtitle {
+    font-size: 13px;
+    color: var(--g-text-muted);
+    max-width: 360px;
+    line-height: 1.5;
+}
+
+/* Present file transfer status and progress controls. */
+.btn-empty-upload {
+    height: 38px;
+    padding: 0 22px;
+    border-radius: 19px;
+    background-color: var(--g-primary-blue);
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background-color 0.15s;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-empty-upload,
+:root:not([data-theme="light"]) .btn-empty-upload {
+    color: #062e6f;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-empty-upload:hover {
+    background-color: var(--g-primary-hover);
+}
+
+/* ===== Media Grid (Grid View default) ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    width: 100%;
+    padding: 10px 0;
+}
+
+/* ===== Grid Card ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-card {
+    background-color: var(--g-card-bg);
+    border: 1px solid var(--g-border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.media-card:hover {
+    background-color: var(--g-hover-bg);
+    border-color: var(--g-primary-blue);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.thumb-img {
+    width: 100%;
+    height: 135px;
+    object-fit: cover;
+    background-color: var(--g-hover-bg);
+    display: block;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.file-title {
+    padding: 10px 12px 4px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-top: 1px solid var(--g-border);
+    background-color: var(--g-surface);
+}
+
+/* Present keyword filtering controls and selected filters. */
+.file-folder-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    color: var(--g-text-muted);
+    padding: 0 12px 10px 12px;
+    background-color: var(--g-surface);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.file-folder-chip .material-symbols-outlined {
+    font-size: 14px;
+    color: var(--g-primary-blue);
+    flex-shrink: 0;
+}
+
+/* ===== Extra Large Icons View (1) ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-extra-large {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-extra-large .media-card {
+    border-radius: 16px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-extra-large .thumb-img {
+    height: 250px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-extra-large .file-title {
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ===== Large Icons View (2) ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-large,
+.media-grid.large-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-large .media-card,
+.media-grid.large-grid .media-card {
+    border-radius: 14px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-large .thumb-img,
+.media-grid.large-grid .thumb-img {
+    height: 180px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-large .file-title,
+.media-grid.large-grid .file-title {
+    padding: 12px 14px;
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+/* ===== Medium Icons View (3, Default) ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-medium {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-medium .thumb-img {
+    height: 135px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-medium .file-title {
+    padding: 10px 12px;
+    font-size: 13px;
+}
+
+/* ===== Small Icons View (4) ===== */
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-small {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-small .media-card {
+    border-radius: 10px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-small .thumb-img {
+    height: 85px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-small .file-title {
+    padding: 6px 8px;
+    font-size: 11.5px;
+}
+
+/* ==========================================================================
+   FILE DETAILS / LIST VIEW
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Present file entries, thumbnails, or list layout. */
+.list-view-header {
+    display: none;
+    grid-template-columns: minmax(200px, 1fr) 140px 48px;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--g-border);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--g-text-muted);
+    user-select: none;
+    gap: 16px;
+}
+
+/* Present file entries, thumbnails, or list layout. Show list-view header only when Details, list-view is active. */
+.media-grid.view-details,
+.media-grid.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+}
+
+/* Present file entries, thumbnails, or list layout. Active List View Header. */
+.is-list-mode .list-view-header {
+    display: grid;
+}
+
+/* Present file entries, thumbnails, or list layout. List View Row. */
+.media-grid.view-details .media-card,
+.media-grid.list-view .media-card {
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) 140px 48px;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px;
+    border: none;
+    border-bottom: 1px solid var(--g-border-subtle);
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    gap: 16px;
+}
+
+/* Style the corresponding interactive or UI state. */
+.media-grid.view-details .media-card:hover,
+.media-grid.list-view .media-card:hover {
+    background-color: var(--g-hover-bg);
+    box-shadow: none;
+}
+
+/* Present file entries, thumbnails, or list layout. Columns inside media-card in list-view. */
+.media-grid.view-details .list-col-name,
+.media-grid.list-view .list-col-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+    padding-right: 12px;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-details .thumb-img,
+.media-grid.list-view .thumb-img {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: transparent;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-details .file-title,
+.media-grid.list-view .file-title {
+    border-top: none;
+    background-color: transparent;
+    padding: 0;
+    font-size: 13.5px;
+    font-weight: 400;
+    color: var(--g-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-details .list-col-size,
+.media-grid.list-view .list-col-size {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: var(--g-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.list-header-size {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--g-text-muted);
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid.view-details .list-col-more,
+.media-grid.list-view .list-col-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--g-text-muted);
+}
+
+/* Style the corresponding interactive or UI state. */
+.media-grid.view-details .list-col-more:hover,
+.media-grid.list-view .list-col-more:hover {
+    color: var(--g-text-main);
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid:not(.view-details):not(.list-view) .list-col-size {
+    display: none !important;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid:not(.view-details):not(.list-view) .list-col-name {
+    display: contents;
+}
+
+/* Present file entries, thumbnails, or list layout. */
+.media-grid:not(.view-details):not(.list-view) .list-col-more {
+    display: contents;
+}
+
+/* ==========================================================================
+   LOADING AND PROGRESS INDICATORS
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Define the layout or appearance of this UI element. */
+.infinite-scroll-loader {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px 0 20px 0;
+    color: var(--g-text-muted);
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+/* Present file transfer status and progress controls. */
+.m3-circular-spinner {
+    width: 28px;
+    height: 28px;
+    animation: m3SpinnerRotate 1.4s linear infinite;
+}
+
+/* Define the layout or appearance of this UI element. */
+.m3-circular-track {
+    stroke: var(--m3-track);
+}
+
+/* Define the layout or appearance of this UI element. */
+.m3-circular-indicator {
+    stroke: var(--m3-primary);
+    stroke-dasharray: 80;
+    stroke-dashoffset: 60;
+    animation: m3SpinnerArc 1.4s ease-in-out infinite;
+}
+
+/* Present file transfer status and progress controls. */
+.m3-circular-progress {
+    display: inline-block;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: var(--g-border-subtle, rgba(255, 255, 255, 0.2));
+    border-top-color: var(--m3-primary, var(--g-primary-blue));
+    animation: m3SpinnerRotate 0.8s linear infinite;
+    box-sizing: border-box;
+}
+
+/* Present file transfer status and progress controls. */
+.m3-linear-progress {
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: var(--g-border-subtle, rgba(255, 255, 255, 0.12));
+    position: relative;
+    width: 100%;
+}
+
+/* Define the layout or appearance of this UI element. */
+.m3-linear-bar {
+    height: 100%;
+    background-color: var(--m3-primary, var(--g-primary-blue));
+    border-radius: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Define the layout or appearance of this UI element. */
+.m3-linear-bar.indeterminate {
+    animation: m3LinearIndeterminate 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes m3LinearIndeterminate {
+    0% {
+        left: -35%;
+        width: 35%;
+    }
+
+    60% {
+        left: 100%;
+        width: 70%;
+    }
+
+    100% {
+        left: 100%;
+        width: 70%;
+    }
+}
+
+@keyframes m3SpinnerRotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes m3SpinnerArc {
+    0% {
+        stroke-dasharray: 1, 100;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 70, 100;
+        stroke-dashoffset: -20;
+    }
+
+    100% {
+        stroke-dasharray: 70, 100;
+        stroke-dashoffset: -90;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DRIVE OVERRIDES
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+    /* Arrange folder navigation and folder-related controls. */
+    .drive-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        max-width: 85vw;
+        height: 100%;
+        height: 100dvh;
+        background-color: var(--g-surface);
+        box-shadow: 0 4px 32px rgba(0, 0, 0, 0.45);
+        border-radius: 0 24px 24px 0;
+        z-index: 1050;
+        transform: translateX(-100%);
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+        pointer-events: auto;
+        padding: 0 16px 20px 16px;
+        gap: 12px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .drive-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .sidebar-collapsed .drive-sidebar {
+        width: 280px;
+        max-width: 85vw;
+        transform: translateX(-100%);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .sidebar-collapsed .drive-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    /* Arrange folder navigation and folder-related controls. */
+    .mobile-drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        min-height: 64px;
+        flex-shrink: 0;
+        padding: 0 4px;
+        border-bottom: 1px solid var(--g-border-subtle);
+        margin-bottom: 4px;
+        user-select: none;
+    }
+
+    /* Arrange folder navigation and folder-related controls. */
+    .mobile-drawer-header .logo-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    /* Arrange folder navigation and folder-related controls. */
+    .mobile-drawer-header .logo-wrap .nav-logo-img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        border-radius: 5px;
+        display: block;
+    }
+
+    /* Arrange folder navigation and folder-related controls. */
+    .mobile-drawer-header .logo-wrap .app-title {
+        font-size: 19px;
+        font-weight: 500;
+        color: var(--g-text);
+        letter-spacing: -0.2px;
+    }
+
+    /* Arrange folder navigation and folder-related controls. */
+    .drawer-close-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
+        color: var(--g-text-muted);
+        cursor: pointer;
+        transition: background-color var(--g-transition-fast), color var(--g-transition-fast);
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .drawer-close-btn:hover,
+    .drawer-close-btn:active {
+        background-color: var(--g-hover);
+        color: var(--g-text);
+    }
+
+    /* Style search input and related controls. */
+    .mobile-search-toggle {
+        display: flex;
+    }
+
+    /* Style search input and related controls. */
+    .header-search-box {
+        display: none;
+    }
+
+    /* Style the corresponding interactive or UI state. (entire navigation bar is search bar when mobile) */
+    .drive-header.mobile-search-active {
+        padding: 0 8px;
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .drive-header.mobile-search-active .header-left,
+    .drive-header.mobile-search-active .header-right {
+        display: none !important;
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .drive-header.mobile-search-active .header-search-box {
+        display: flex !important;
+        flex: 1;
+        width: 100%;
+        max-width: 100%;
+        height: 48px;
+        background-color: var(--g-search-bg);
+        border-radius: 24px;
+        padding: 0 10px 0 6px;
+        gap: 8px;
+        margin: 0;
+        animation: mobileSearchSlideIn 0.2s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .drive-header.mobile-search-active .mobile-search-back-btn {
+        display: flex;
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .drive-header.mobile-search-active .search-input {
+        font-size: 16px;
+    }
+
+    @keyframes mobileSearchSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.97);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Define the layout or appearance of this UI element. */
+    .drive-workspace {
+        padding: 10px 12px 20px 12px;
+    }
+
+    /* Define the layout or appearance of this UI element. */
+    .workspace-top-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 50;
+        flex-wrap: nowrap;
+    }
+
+    /* Define the layout or appearance of this UI element. (Hide breadcrumb trail on mobile) */
+    .breadcrumb-trail {
+        display: none !important;
+    }
+
+    /* Define the layout or appearance of this UI element. */
+    .breadcrumb-container {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    /* Arrange folder navigation and folder-related controls. */
+    .workspace-folder-title {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--g-text-main);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+    }
+
+    /* Define the layout or appearance of this UI element. (right-aligned single row toolbar on mobile) */
+    .workspace-action-group {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+        flex-wrap: nowrap;
+        overflow: visible;
+        padding: 0;
+        width: auto;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 50;
+    }
+
+    /* Style an actionable button or control. */
+    .top-action-btn {
+        padding: 6px 8px;
+        border-radius: 8px;
+        background-color: var(--g-hover-bg);
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        width: 36px;
+    }
+
+    /* Style the corresponding interactive or UI state. */
+    .top-action-btn:hover {
+        background-color: var(--m3-surface-container-highest, #e0e6f0);
+    }
+
+    /* Icon-only mode for mobile toolbar buttons */
+    /* Style an actionable button or control. */
+    .top-action-btn span:not(.material-symbols-outlined) {
+        display: none !important;
+    }
+
+    /* Style an actionable button or control. */
+    .top-action-btn .material-symbols-outlined {
+        font-size: 19px;
+        margin: 0;
+    }
+
+    /* Present keyword filtering controls and selected filters. */
+    .sort-dropdown-menu,
+    .view-dropdown-menu,
+    .filter-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        right: 0;
+        left: auto;
+        width: max-content;
+        max-width: calc(100vw - 20px);
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Define menu layout, items, and interaction affordances. */
+    .view-dropdown-menu {
+        min-width: 220px;
+    }
+
+    /* Define menu layout, items, and interaction affordances. */
+    .sort-dropdown-menu {
+        min-width: 240px;
+    }
+
+    /* Present keyword filtering controls and selected filters. */
+    .filter-dropdown-menu {
+        min-width: 260px;
+        max-width: min(320px, calc(100vw - 20px));
+    }
+
+    /* Define menu layout, items, and interaction affordances. */
+    .sort-menu-header,
+    .view-menu-header {
+        display: block;
+    }
+
+    /* Present keyword filtering controls and selected filters. */
+    .filter-header-title {
+        display: inline;
+    }
+
+    /* Present keyword filtering controls and selected filters. */
+    .filter-menu-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 10px 4px 10px;
+    }
+
+    /* Present file entries, thumbnails, or list layout. */
+    .list-view-header {
+        grid-template-columns: 1fr 80px 36px;
+        gap: 8px;
+    }
+
+    /* Present file entries, thumbnails, or list layout. */
+    .media-grid.view-details .media-card,
+    .media-grid.list-view .media-card {
+        grid-template-columns: 1fr 80px 36px;
+        gap: 8px;
+    }
+
+    /* Mobile Upload Progress Widget: Full width bottom sheet */
+    /* Present file transfer status and progress controls. */
+    .upload-progress-widget {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    /* Present file transfer status and progress controls. */
+    .upload-widget-header {
+        height: 52px;
+        padding: 0 12px 0 20px;
+    }
+}
+
+/* ==========================================================================
+   KEYWORD FILTER AND ACTIVE CHIPS
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Present keyword filtering controls and selected filters. */
+.filter-count-badge {
+    background-color: var(--g-primary-blue);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+    min-width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.top-action-btn.active-filter {
+    background-color: var(--m3-primary-container);
+    color: var(--m3-on-primary-container);
+}
+
+/* Style the corresponding interactive or UI state. */
+.top-action-btn.active-filter .material-symbols-outlined {
+    color: var(--m3-on-primary-container);
+}
+
+/* Style the corresponding interactive or UI state. */
+.top-action-btn.active-filter .filter-count-badge {
+    background-color: var(--m3-primary);
+    color: var(--m3-on-primary);
+}
+
+/* ===== Active Filter Chips Bar ===== */
+/* Style the corresponding interactive or UI state. */
+.active-filter-chips-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    margin: 2px 0 12px 0;
+    background-color: var(--m3-surface-container);
+    border: 1px solid var(--g-border-subtle);
+    border-radius: 12px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    animation: m3FadeIn 0.15s ease-out;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+@keyframes m3FadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Present keyword filtering controls and selected filters. */
+.chips-label {
+    font-weight: 600;
+    color: var(--g-text-muted);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.chips-scroll-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px 4px 10px;
+    border-radius: 8px;
+    background-color: var(--m3-primary-container);
+    color: var(--m3-on-primary-container);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: default;
+    transition: background-color 0.15s, transform 0.1s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-chip:hover {
+    background-color: var(--g-fab-hover);
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-chip .chip-remove-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 2px;
+    margin-left: 2px;
+    color: var(--m3-on-primary-container);
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.75;
+    transition: opacity 0.15s, background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-chip .chip-remove-btn:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Present keyword filtering controls and selected filters. */
+.clear-chips-btn {
+    background: transparent;
+    border: none;
+    color: var(--g-primary-blue);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-left: auto;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.clear-chips-btn:hover {
+    text-decoration: underline;
+    background-color: var(--g-hover-bg);
+}
+
+/* ===== Filter Dropdown Menu Elements ===== */
+/* Present keyword filtering controls and selected filters. */
+.filter-menu-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--g-text-muted);
+    padding: 4px 10px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-menu-header.has-clear {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-header-title {
+    display: none;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-menu-clear-btn {
+    background: transparent;
+    border: none;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--g-primary-blue);
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-menu-clear-btn:hover {
+    text-decoration: underline;
+    background-color: var(--g-hover-bg);
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-dropdown-search-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 10px 0 28px;
+    border: 1px solid var(--g-border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12.5px;
+    outline: none;
+    background-color: var(--g-hover-bg);
+    color: var(--g-text-main);
+    box-sizing: border-box;
+    transition: border-color 0.15s, background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-dropdown-search-input:focus {
+    border-color: var(--m3-primary);
+    background-color: var(--g-surface);
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-items-scroll-list {
+    max-height: 250px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px 4px;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-items-scroll-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-items-scroll-list::-webkit-scrollbar-thumb {
+    background: var(--g-border);
+    border-radius: 3px;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 36px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    transition: background-color 0.15s, color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-menu-item:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-menu-item.active {
+    background-color: var(--m3-primary-container, #d3e3fd);
+    color: var(--m3-on-primary-container, #041e49);
+    font-weight: 600;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-item-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-item-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--g-primary-blue);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-item-count {
+    font-size: 11px;
+    color: var(--g-text-muted);
+    font-weight: 500;
+    background-color: var(--m3-surface-container-highest);
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+
+/* Style the corresponding interactive or UI state. */
+.filter-menu-item.active .filter-item-count {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: var(--m3-on-primary-container);
+}
+
+/* Present keyword filtering controls and selected filters. */
+.filter-empty-message {
+    padding: 18px 12px;
+    text-align: center;
+    color: var(--g-text-muted);
+}

@@ -1,0 +1,1311 @@
+/* ==========================================================================
+   GLOBAL FOUNDATION
+   Used by: index.html, js/app.js, js/views/login.js, js/views/drive.js, js/views/viewer.js
+   ========================================================================== */
+
+/* Configure theme-dependent design tokens or color overrides. */
+:root {
+    /* Default: System Light Theme */
+    --g-bg: #ffffff;
+    --g-surface: #ffffff;
+    --g-search-bg: #edf2fc;
+    --g-border: #e0e2ec;
+    --g-border-subtle: #f0f1f4;
+    --g-primary-blue: #0b57d0;
+    --g-primary-hover: #0842a0;
+    --g-fab-bg: #d3e3fd;
+    --g-fab-hover: #c2e7ff;
+    --g-fab-text: #041e49;
+    --g-text-main: #1f1f1f;
+    --g-text-muted: #5f6368;
+    --g-hover-bg: #f0f4f9;
+    --g-active-bg: #d3e3fd;
+    --g-danger: #b3261e;
+    --g-card-bg: #f8fafd;
+    /* Material You (M3) Design Tokens - Light */
+    --m3-primary: #0b57d0;
+    --m3-primary-hover: #0842a0;
+    --m3-on-primary: #ffffff;
+    --m3-primary-container: #d3e3fd;
+    --m3-on-primary-container: #041e49;
+    --m3-surface-container: #f0f4f9;
+    --m3-surface-container-highest: #e0e6f0;
+    --m3-track: #e0e2ec;
+    --m3-success: #146c2e;
+    --m3-elevation-widget: 0 4px 16px 2px rgba(60, 64, 67, 0.16), 0 1px 4px rgba(60, 64, 67, 0.12);
+    --m3-elevation-dialog: 0 12px 36px 0 rgba(60, 64, 67, 0.24);
+}
+
+/* Automatic System Dark Theme */
+@media (prefers-color-scheme: dark) {
+
+    /* Configure theme-dependent design tokens or color overrides. */
+    :root:not([data-theme="light"]) {
+        --g-bg: #131314;
+        --g-surface: #1e1f20;
+        --g-search-bg: #282a2c;
+        --g-border: #444746;
+        --g-border-subtle: #303134;
+        --g-primary-blue: #a8c7fa;
+        --g-primary-hover: #d3e3fd;
+        --g-fab-bg: #004a77;
+        --g-fab-hover: #005c94;
+        --g-fab-text: #d3e3fd;
+        --g-text-main: #e3e3e3;
+        --g-text-muted: #c4c7c5;
+        --g-hover-bg: #282a2c;
+        --g-active-bg: #004a77;
+        --g-danger: #f2b8b5;
+        --g-card-bg: #1e1f20;
+        /* Material You (M3) Design Tokens - Dark */
+        --m3-primary: #a8c7fa;
+        --m3-primary-hover: #d3e3fd;
+        --m3-on-primary: #041e49;
+        --m3-primary-container: #004a77;
+        --m3-on-primary-container: #d3e3fd;
+        --m3-surface-container: #232528;
+        --m3-surface-container-highest: #333538;
+        --m3-track: #44474f;
+        --m3-success: #81c995;
+        --m3-elevation-widget: 0 8px 24px rgba(0, 0, 0, 0.5);
+        --m3-elevation-dialog: 0 16px 40px rgba(0, 0, 0, 0.65);
+    }
+}
+
+/* Explicit Dark Mode, Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] {
+    --g-bg: #131314;
+    --g-surface: #1e1f20;
+    --g-search-bg: #282a2c;
+    --g-border: #444746;
+    --g-border-subtle: #303134;
+    --g-primary-blue: #a8c7fa;
+    --g-primary-hover: #d3e3fd;
+    --g-fab-bg: #004a77;
+    --g-fab-hover: #005c94;
+    --g-fab-text: #d3e3fd;
+    --g-text-main: #e3e3e3;
+    --g-text-muted: #c4c7c5;
+    --g-hover-bg: #282a2c;
+    --g-active-bg: #004a77;
+    --g-danger: #f2b8b5;
+    --g-card-bg: #1e1f20;
+    /* Material You (M3) Design Tokens - Dark */
+    --m3-primary: #a8c7fa;
+    --m3-primary-hover: #d3e3fd;
+    --m3-on-primary: #041e49;
+    --m3-primary-container: #004a77;
+    --m3-on-primary-container: #d3e3fd;
+    --m3-surface-container: #232528;
+    --m3-surface-container-highest: #333538;
+    --m3-track: #44474f;
+    --m3-success: #81c995;
+    --m3-elevation-widget: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --m3-elevation-dialog: 0 16px 40px rgba(0, 0, 0, 0.65);
+}
+
+/* Explicit Light Mode, Configure theme-dependent design tokens or color overrides. */
+[data-theme="light"] {
+    --g-bg: #ffffff;
+    --g-surface: #ffffff;
+    --g-search-bg: #edf2fc;
+    --g-border: #e0e2ec;
+    --g-border-subtle: #f0f1f4;
+    --g-primary-blue: #0b57d0;
+    --g-primary-hover: #0842a0;
+    --g-fab-bg: #d3e3fd;
+    --g-fab-hover: #c2e7ff;
+    --g-fab-text: #041e49;
+    --g-text-main: #1f1f1f;
+    --g-text-muted: #5f6368;
+    --g-hover-bg: #f0f4f9;
+    --g-active-bg: #d3e3fd;
+    --g-danger: #b3261e;
+    --g-card-bg: #f8fafd;
+    /* Material You (M3) Design Tokens - Light */
+    --m3-primary: #0b57d0;
+    --m3-primary-hover: #0842a0;
+    --m3-on-primary: #ffffff;
+    --m3-primary-container: #d3e3fd;
+    --m3-on-primary-container: #041e49;
+    --m3-surface-container: #f0f4f9;
+    --m3-surface-container-highest: #e0e6f0;
+    --m3-track: #e0e2ec;
+    --m3-success: #146c2e;
+    --m3-elevation-widget: 0 4px 16px 2px rgba(60, 64, 67, 0.16), 0 1px 4px rgba(60, 64, 67, 0.12);
+    --m3-elevation-dialog: 0 12px 36px 0 rgba(60, 64, 67, 0.24);
+}
+
+/* Set application-wide base layout and visibility behavior. */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Set application-wide base layout and visibility behavior. */
+body {
+    font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--g-bg);
+    color: var(--g-text-main);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.12s ease;
+    opacity: 0;
+}
+
+/* Set application-wide base layout and visibility behavior. */
+body.app-ready {
+    opacity: 1;
+}
+
+/* Set application-wide base layout and visibility behavior. */
+html.boot-pending body {
+    opacity: 1;
+}
+
+/* Define the layout or appearance of this UI element. */
+.hidden {
+    display: none !important;
+}
+
+/* ===== SPA View Container Rules ===== */
+/* Define the layout or appearance of this UI element. */
+.view-container {
+    display: none !important;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Style the corresponding interactive or UI state. */
+.view-container.active {
+    display: flex !important;
+}
+
+/* Set application-wide base layout and visibility behavior. */
+html.boot-pending #view-login {
+    display: flex !important;
+}
+
+/* Arrange login or form elements. */
+#view-login {
+    position: relative;
+}
+
+/* Arrange login or form elements. */
+.view-login-topbar {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+}
+
+/* Style the corresponding interactive or UI state. */
+#view-login.active {
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Style the corresponding interactive or UI state. */
+#view-drive.active {
+    flex-direction: column;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Style the corresponding interactive or UI state. */
+#view-viewer.active {
+    flex-direction: column;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: var(--preview-bg, #131314);
+}
+
+/* Define the layout or appearance of this UI element. */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   LOGIN AND REGISTRATION
+   Used by: index.html, js/views/login.js
+   ========================================================================== */
+
+/* Arrange login or form elements. */
+.signin-card {
+    background-color: var(--g-surface);
+    border: 1px solid var(--g-border);
+    border-radius: 28px;
+    padding: 36px 40px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15), 0 4px 8px 3px rgba(60, 64, 67, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .signin-card,
+:root:not([data-theme="light"]) .signin-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Define the layout or appearance of this UI element. */
+.drive-logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.drive-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Style an actionable button or control. */
+.header-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--g-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Style the corresponding interactive or UI state. */
+.header-icon-btn:hover {
+    background-color: var(--g-hover-bg);
+    color: var(--g-text-main);
+}
+
+/* Style an actionable button or control. */
+.header-icon-btn .material-symbols-outlined {
+    font-size: 22px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.drive-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 6px;
+    display: block;
+    flex-shrink: 0;
+}
+
+/* Define the layout or appearance of this UI element. */
+.drive-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    letter-spacing: -0.2px;
+}
+
+/* Arrange the relevant screen header and controls. */
+.sub-header {
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+/* Arrange the relevant screen header and controls. */
+.sub-header h2 {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--g-text-main);
+}
+
+/* ===== Outlined Inputs ===== */
+/* Arrange login or form elements. */
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Arrange login or form elements. */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Login Card Inputs ===== */
+/* Arrange login or form elements. */
+.signin-card input[type="text"],
+.signin-card input[type="password"] {
+    width: 100%;
+    height: 54px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--g-text-main);
+    background-color: transparent;
+    border: 1px solid var(--g-border);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Arrange login or form elements. */
+.signin-card input[type="text"]::placeholder,
+.signin-card input[type="password"]::placeholder {
+    color: var(--g-text-muted);
+    font-size: 14px;
+}
+
+/* Style the corresponding interactive or UI state. */
+.signin-card input[type="text"]:focus,
+.signin-card input[type="password"]:focus {
+    border-color: var(--g-primary-blue);
+    box-shadow: 0 0 0 1px var(--g-primary-blue);
+}
+
+/* ===== Action Buttons ===== */
+/* Define the layout or appearance of this UI element. */
+.actions-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+/* Style an actionable button or control. */
+#btnRegister {
+    background: transparent;
+    color: var(--g-primary-blue);
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+/* Style the corresponding interactive or UI state. */
+#btnRegister:hover {
+    background-color: rgba(11, 87, 208, 0.08);
+}
+
+/* Style an actionable button or control. */
+#btnLogin {
+    background-color: var(--g-primary-blue);
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 24px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] #btnLogin,
+:root:not([data-theme="light"]) #btnLogin {
+    color: #062e6f;
+}
+
+/* Style the corresponding interactive or UI state. */
+#btnLogin:hover {
+    background-color: var(--g-primary-hover);
+    box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.3);
+}
+
+/* Style the corresponding interactive or UI state. */
+#btnLogin:active,
+#btnRegister:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   SHARED DIALOG COMPONENTS
+   Used by: index.html, js/core/utils.js, js/views/drive.js, js/views/login.js, js/views/viewer.js
+   ========================================================================== */
+
+/* Style shared dialog structure, inputs, and actions. */
+dialog {
+    background-color: var(--g-surface, var(--m3-surface-container));
+    color: var(--g-text-main);
+    border: 1px solid var(--g-border-subtle);
+    border-radius: 28px;
+    padding: 28px;
+    max-width: 440px;
+    width: 90%;
+    margin: auto;
+    outline: none;
+    box-shadow: var(--m3-elevation-dialog);
+    animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+dialog:not([open]) {
+    display: none;
+}
+
+@keyframes m3DialogPop {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-m3-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--m3-primary-container);
+    color: var(--m3-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-m3-icon .material-symbols-outlined {
+    font-size: 26px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-title {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    margin-bottom: 16px;
+    color: var(--g-text-main);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-title .material-symbols-outlined {
+    font-size: 26px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-body {
+    font-size: 14.5px;
+    color: var(--g-text-muted);
+    line-height: 1.55;
+    margin-bottom: 24px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+    border: 1.5px solid var(--g-border);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 15px;
+    margin-bottom: 20px;
+    outline: none;
+    background-color: var(--g-hover-bg);
+    color: var(--g-text-main);
+    transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.dialog-input:focus {
+    border-color: var(--m3-primary);
+    background-color: var(--g-surface);
+    box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.15);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-actions,
+.dialog-btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-cancel,
+.btn-dialog-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 20px;
+    border: none;
+    background: transparent;
+    color: var(--m3-primary);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    line-height: 1;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-cancel:hover,
+.btn-dialog-text:hover {
+    background-color: var(--m3-surface-container-highest);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-confirm,
+.btn-dialog-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 24px;
+    border: none;
+    background-color: var(--m3-primary);
+    color: var(--m3-on-primary);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.15s, box-shadow 0.15s;
+    line-height: 1;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-confirm:hover,
+.btn-dialog-primary:hover {
+    background-color: var(--m3-primary-hover);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 24px;
+    border: none;
+    background-color: var(--g-danger, #b3261e);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.15s, box-shadow 0.15s;
+    line-height: 1;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-danger,
+:root:not([data-theme="light"]) .btn-dialog-danger {
+    background-color: #f2b8b5;
+    color: #601410;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-danger:hover {
+    background-color: #8c1d18;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-danger:hover,
+:root:not([data-theme="light"]) .btn-dialog-danger:hover {
+    background-color: #f9dedc;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-danger:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ===== Trim Folder Dialog Custom UI ===== */
+/* Style shared dialog structure, inputs, and actions. */
+#trimFolderModal {
+    max-width: 440px;
+    padding: 24px 24px 20px 24px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+#trimFolderModal .dialog-body {
+    white-space: normal;
+    font-size: 14px;
+    color: var(--g-text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+#trimFolderModal .dialog-title {
+    margin-bottom: 12px;
+}
+
+/* ==========================================================================
+   SHARED DIALOG REFINEMENTS
+   Used by: index.html, js/core/utils.js, js/views/drive.js, js/views/login.js, js/views/viewer.js
+   ========================================================================== */
+
+/* Style shared dialog structure, inputs, and actions. */
+dialog {
+    background-color: var(--g-surface);
+    color: var(--g-text-main);
+    border: 1px solid var(--g-border-card);
+    border-radius: 28px;
+    padding: 28px;
+    max-width: 440px;
+    width: 90%;
+    margin: auto;
+    outline: none;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+    animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes m3DialogPop {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-title {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    color: var(--g-text-main);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-title .material-symbols-outlined {
+    font-size: 26px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-body {
+    font-size: 14.5px;
+    color: var(--g-text-muted);
+    line-height: 1.55;
+    margin-bottom: 24px;
+    white-space: pre-wrap;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-text {
+    background: transparent;
+    color: var(--g-primary-blue);
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 20px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-text:hover {
+    background-color: rgba(11, 87, 208, 0.08);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-primary {
+    background-color: var(--g-primary-blue);
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 24px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-primary,
+:root:not([data-theme="light"]) .btn-dialog-primary {
+    color: #062e6f;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-primary:hover {
+    background-color: var(--g-primary-hover);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 480px) {
+
+    /* Arrange login or form elements. */
+    .signin-card {
+        padding: 28px 20px;
+        border-radius: 20px;
+    }
+
+    /* Arrange login or form elements. */
+    .view-login-topbar {
+        top: 12px;
+        right: 12px;
+    }
+}
+
+/* ==========================================================================
+   DRAG-AND-DROP OVERLAY
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Present the drag-and-drop upload overlay. */
+.drag-drop-overlay {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 9999;
+    background-color: rgba(11, 87, 208, 0.08);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 2px dashed var(--g-primary-blue);
+    border-radius: 24px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
+    animation: overlayFadeIn 0.15s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .drag-drop-overlay,
+:root:not([data-theme="light"]) .drag-drop-overlay {
+    background-color: rgba(168, 199, 250, 0.06);
+}
+
+/* Style the corresponding interactive or UI state. */
+.drag-drop-overlay.active {
+    display: flex;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Present the drag-and-drop upload overlay. */
+.drag-drop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--g-surface);
+    padding: 32px 48px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--g-border-subtle);
+}
+
+/* Present the drag-and-drop upload overlay. */
+.drag-drop-icon {
+    font-size: 56px;
+    color: var(--g-primary-blue);
+    animation: bounceUpDown 1.2s infinite ease-in-out;
+}
+
+@keyframes bounceUpDown {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* Present the drag-and-drop upload overlay. */
+.drag-drop-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--g-text-main);
+}
+
+/* Present the drag-and-drop upload overlay. */
+.drag-drop-subtitle {
+    font-size: 13.5px;
+    color: var(--g-text-muted);
+}
+
+/* ==========================================================================
+   FLOATING UPLOAD PROGRESS
+   Used by: index.html, js/views/drive.js
+   ========================================================================== */
+
+/* Present file transfer status and progress controls. */
+.upload-progress-widget {
+    position: fixed;
+    bottom: 0;
+    right: 24px;
+    width: 360px;
+    background-color: var(--g-surface);
+    border: 1px solid var(--g-border);
+    border-bottom: none;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.28), 0 1px 4px 0 rgba(0, 0, 0, 0.16);
+    z-index: 2000;
+    overflow: hidden;
+    font-family: inherit;
+    transition: transform 0.25s cubic-bezier(0, 0, 0.2, 1), opacity 0.2s ease;
+    animation: gDriveSlideUp 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes gDriveSlideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Present file transfer status and progress controls. */
+.upload-widget-header {
+    height: 48px;
+    padding: 0 8px 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--g-surface);
+    border-bottom: 1px solid var(--g-border-subtle);
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-widget-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-widget-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--g-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-widget-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+/* Style an actionable button or control. */
+.widget-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--g-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.widget-action-btn:hover {
+    background-color: var(--g-hover-bg);
+    color: var(--g-text-main);
+}
+
+/* Style an actionable button or control. */
+.widget-action-btn .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-widget-body {
+    max-height: 240px;
+    overflow-y: auto;
+    background-color: var(--g-surface);
+    padding: 4px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-widget-body.collapsed {
+    display: none;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-file-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-file-item {
+    height: 44px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.15s ease;
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-file-item:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-file-item.completed {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-file-item.completed:hover {
+    background-color: var(--g-hover-bg);
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-file-item.completed:active {
+    background-color: var(--g-active-bg, rgba(66, 133, 244, 0.12));
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-file-item.completed:focus-visible {
+    outline: 2px solid var(--g-primary-blue);
+    outline-offset: -2px;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-item-type-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-item-name {
+    font-size: 13px;
+    color: var(--g-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-item-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-item-status .status-complete-icon {
+    font-size: 20px;
+    color: var(--m3-success, #1e8e3e);
+    font-variation-settings: 'FILL' 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    /* Style the corresponding interactive or UI state. */
+    .upload-file-item.completed:hover .upload-item-name {
+        color: var(--g-primary-blue);
+    }
+}
+
+/* Circular Progress Button with Hover Cancel X, Present file transfer status. */
+.upload-progress-btn {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.15s ease;
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-progress-btn:hover {
+    background-color: var(--g-hover-bg, rgba(0, 0, 0, 0.06));
+}
+
+/* Present file transfer status and progress controls. */
+.upload-progress-btn .progress-ring-svg {
+    width: 22px;
+    height: 22px;
+    transform: rotate(-90deg);
+    display: block;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-progress-btn .progress-ring-bg {
+    fill: none;
+    stroke: var(--m3-track, #e0e2ec);
+    stroke-width: 2.4;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-progress-btn .progress-ring-circle {
+    fill: none;
+    stroke: var(--g-primary-blue, #1a73e8);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-dasharray: 56.548;
+    stroke-dashoffset: 56.548;
+    transition: stroke-dashoffset 0.12s linear, stroke 0.15s ease;
+}
+
+/* Present file transfer status and progress controls. */
+.upload-progress-btn .progress-cancel-icon {
+    position: absolute;
+    font-size: 14px;
+    color: var(--g-text-muted);
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-progress-btn:hover .progress-cancel-icon {
+    opacity: 1;
+    color: var(--g-danger, #d93025);
+}
+
+/* Style the corresponding interactive or UI state. */
+.upload-progress-btn:hover .progress-ring-circle {
+    stroke: var(--g-danger, #d93025);
+}
+
+/* ==========================================================================
+   DOWNLOAD PROGRESS TOAST
+   Used by: js/views/viewer.js, js/views/drive.js
+   ========================================================================== */
+
+/* Present file transfer status and progress controls. */
+.download-progress-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;
+    background-color: var(--g-surface, #ffffff);
+    color: var(--g-text-main, #1f1f1f);
+    border: 1px solid var(--g-border, #dadce0);
+    border-radius: 12px;
+    padding: 8px 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+    transition: transform 0.25s cubic-bezier(0, 0, 0.2, 1), opacity 0.2s ease;
+    animation: gDriveSlideUp 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-icon-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--g-hover-bg, rgba(0, 0, 0, 0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-icon {
+    font-size: 18px;
+    color: var(--g-primary-blue, #0b57d0);
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Arrange the relevant screen header and controls. */
+.download-toast-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    line-height: 1.2;
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--g-text-main, #1f1f1f);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-percent {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--g-primary-blue, #0b57d0);
+    flex-shrink: 0;
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-meta {
+    font-size: 11.5px;
+    color: var(--g-text-muted, #5f6368);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-bar-track {
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    background-color: var(--g-border-subtle, rgba(0, 0, 0, 0.08));
+    overflow: hidden;
+    margin-top: 3px;
+}
+
+/* Present a transient transfer status notification. */
+.download-toast-bar-fill {
+    height: 100%;
+    background-color: var(--g-primary-blue, #0b57d0);
+    border-radius: 2px;
+    transition: width 0.15s ease-out;
+}

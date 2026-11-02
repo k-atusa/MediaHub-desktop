@@ -1,3 +1,5 @@
+// go build -tags "desktop,production" -ldflags="-w -s -H windowsgui" -o ge.exe .
+
 package main
 
 import (
@@ -11,21 +13,24 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
+// Embedded static web frontend assets
+//
 //go:embed all:public
 var assets embed.FS
 
+// Main entry point for desktop application
 func main() {
-	// Create an instance of the app structure
+	// Initialize core application instance
 	app := NewApp()
 
-	// Safe User Data Directory for WebView2
+	// Resolve safe user data directory for WebView2
 	cacheDir, err := os.UserCacheDir()
 	if err != nil {
 		cacheDir = os.TempDir()
 	}
 	userDataPath := filepath.Join(cacheDir, "MediaHubGE_WebView2")
 
-	// Create application with options
+	// Configure and run Wails application
 	err = wails.Run(&options.App{
 		Title:  "MediaHub GE (Go + Wails)",
 		Width:  1024,
@@ -35,6 +40,7 @@ func main() {
 		},
 		BackgroundColour: &options.RGBA{R: 15, G: 23, B: 42, A: 1},
 		OnStartup:        app.startup,
+		OnShutdown:       app.shutdown,
 		Bind: []interface{}{
 			app,
 		},
@@ -43,6 +49,7 @@ func main() {
 		},
 	})
 
+	// Handle fatal execution error
 	if err != nil {
 		println("Error:", err.Error())
 	}

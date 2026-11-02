@@ -1,0 +1,966 @@
+/* ==========================================================================
+   VIEWER DESIGN TOKENS
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Configure theme-dependent design tokens or color overrides. */
+:root {
+    /* Default: System Theme determined by prefers-color-scheme */
+    --preview-bg: #f8fafd;
+    --preview-topbar: #ffffff;
+    --preview-surface: #ffffff;
+    --preview-hover: #f0f4f9;
+    --preview-outline: #e0e2ec;
+    --preview-primary: #0b57d0;
+    --preview-text: #1f1f1f;
+    --preview-subtext: #5f6368;
+    --preview-danger: #b3261e;
+    --preview-nav-bg: rgba(255, 255, 255, 0.9);
+    --preview-nav-shadow: rgba(0, 0, 0, 0.15);
+}
+
+/* Automatic System Dark Theme */
+@media (prefers-color-scheme: dark) {
+
+    /* Configure theme-dependent design tokens or color overrides. */
+    :root:not([data-theme="light"]) {
+        --preview-bg: #0e0e0e;
+        --preview-topbar: #18191b;
+        --preview-surface: #1e1f20;
+        --preview-hover: #282a2c;
+        --preview-outline: #303134;
+        --preview-primary: #a8c7fa;
+        --preview-text: #e3e3e3;
+        --preview-subtext: #c4c7c5;
+        --preview-danger: #f2b8b5;
+        --preview-nav-bg: rgba(30, 31, 32, 0.85);
+        --preview-nav-shadow: rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Explicit Dark Mode, Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] {
+    --preview-bg: #0e0e0e;
+    --preview-topbar: #18191b;
+    --preview-surface: #1e1f20;
+    --preview-hover: #282a2c;
+    --preview-outline: #303134;
+    --preview-primary: #a8c7fa;
+    --preview-text: #e3e3e3;
+    --preview-subtext: #c4c7c5;
+    --preview-danger: #f2b8b5;
+    --preview-nav-bg: rgba(30, 31, 32, 0.85);
+    --preview-nav-shadow: rgba(0, 0, 0, 0.5);
+}
+
+/* Explicit Light Mode, Configure theme-dependent design tokens or color overrides. */
+[data-theme="light"] {
+    --preview-bg: #f8fafd;
+    --preview-topbar: #ffffff;
+    --preview-surface: #ffffff;
+    --preview-hover: #f0f4f9;
+    --preview-outline: #e0e2ec;
+    --preview-primary: #0b57d0;
+    --preview-text: #1f1f1f;
+    --preview-subtext: #5f6368;
+    --preview-danger: #b3261e;
+    --preview-nav-bg: rgba(255, 255, 255, 0.9);
+    --preview-nav-shadow: rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   VIEWER BASE ELEMENTS
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Set application-wide base layout and visibility behavior. */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Set application-wide base layout and visibility behavior. */
+body {
+    font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--preview-bg);
+    color: var(--preview-text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Define the layout or appearance of this UI element. */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   VIEWER TOP BAR AND ACTIONS
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Arrange media preview and viewer controls. */
+.preview-topbar {
+    height: 56px;
+    background-color: var(--preview-topbar);
+    border-bottom: 1px solid var(--preview-outline);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    flex-shrink: 0;
+    gap: 12px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Arrange the relevant screen header and controls. */
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Style an actionable button or control. */
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--preview-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+
+/* Style the corresponding interactive or UI state. */
+.icon-btn:hover {
+    background-color: var(--preview-hover);
+}
+
+/* ===== File Name Display ===== */
+/* Define the layout or appearance of this UI element. */
+#txName {
+    color: var(--preview-text);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 8px;
+    max-width: 480px;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: text;
+    cursor: default;
+}
+
+/* Arrange the relevant screen header and controls. */
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-danger:hover {
+    color: var(--preview-danger);
+    background-color: rgba(242, 184, 181, 0.15);
+}
+
+/* ==========================================================================
+   PREVIEW CANVAS AND MEDIA CONTENT
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Arrange media preview and viewer controls. */
+.preview-canvas {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 16px;
+}
+
+/* ===== body-box ===== */
+/* Define the layout or appearance of this UI element. */
+.body-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Define the layout or appearance of this UI element. */
+video,
+img {
+    max-width: 90vw;
+    max-height: 84vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: block;
+    margin: auto;
+}
+
+/* Define the layout or appearance of this UI element. */
+iframe {
+    width: 90vw;
+    height: 84vh;
+    border: none;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Define the layout or appearance of this UI element. */
+textarea {
+    width: 90vw;
+    height: 84vh;
+    background-color: var(--preview-topbar);
+    color: var(--preview-text);
+    border: 1px solid var(--preview-outline);
+    border-radius: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 24px;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Style the corresponding interactive or UI state. */
+textarea:focus {
+    border-color: var(--preview-primary);
+}
+
+/* ==========================================================================
+   UNSUPPORTED FILE FALLBACK
+   Used by: js/views/viewer.js
+   ========================================================================== */
+
+/* Arrange media preview and viewer controls. */
+.unsupported-preview-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--preview-surface);
+    border: 1px solid var(--preview-outline);
+    border-radius: 28px;
+    padding: 44px 32px;
+    max-width: 440px;
+    width: 90%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+    box-sizing: border-box;
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-icon-box {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background-color: var(--preview-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-icon {
+    font-size: 38px;
+    color: var(--preview-subtext);
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--preview-text);
+    margin-bottom: 8px;
+    letter-spacing: -0.2px;
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-msg {
+    font-size: 14px;
+    color: var(--preview-subtext);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 28px;
+    background-color: var(--preview-bg);
+    border: 1px solid var(--preview-outline);
+    padding: 10px 20px;
+    border-radius: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-filename {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--preview-text);
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Define the layout or appearance of this UI element. */
+.unsupported-filesize {
+    font-size: 12px;
+    color: var(--preview-subtext);
+}
+
+/* Style an actionable button or control. */
+.btn-unsupported-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 28px;
+    border-radius: 22px;
+    border: none;
+    background-color: var(--preview-primary);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-unsupported-download,
+:root:not([data-theme="light"]) .btn-unsupported-download {
+    background-color: var(--preview-primary);
+    color: #062e6f;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-unsupported-download:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-unsupported-download:active {
+    transform: translateY(0);
+}
+
+/* Style an actionable button or control. */
+.btn-unsupported-download .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   AUDIO PLAYER
+   Used by: js/views/viewer.js
+   ========================================================================== */
+
+/* Present the audio playback interface. */
+.audio-player-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--preview-surface);
+    border: 1px solid var(--preview-outline);
+    border-radius: 28px;
+    padding: 44px 36px;
+    max-width: 480px;
+    width: 90%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+    box-sizing: border-box;
+}
+
+/* Present the audio playback interface. */
+.audio-hero-icon-box {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background-color: var(--preview-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Present the audio playback interface. */
+.audio-hero-icon {
+    font-size: 44px;
+    color: var(--preview-primary);
+}
+
+/* Present the audio playback interface. */
+.audio-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--preview-text);
+    margin-bottom: 6px;
+    max-width: 380px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Present the audio playback interface. */
+.audio-meta {
+    font-size: 13px;
+    color: var(--preview-subtext);
+    margin-bottom: 24px;
+}
+
+/* Present the audio playback interface. */
+.audio-element {
+    width: 100%;
+    max-width: 400px;
+    height: 48px;
+    border-radius: 24px;
+    outline: none;
+}
+
+/* ==========================================================================
+   FILE NAVIGATION BUTTONS
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Style an actionable button or control. */
+.btn-floating-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--preview-nav-bg);
+    border: 1px solid var(--preview-outline);
+    color: var(--preview-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: background-color 0.15s, transform 0.15s, filter 0.15s;
+    box-shadow: 0 2px 8px var(--preview-nav-shadow);
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-floating-nav:hover {
+    background-color: var(--preview-hover);
+    filter: brightness(1.1);
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Style an actionable button or control. */
+#btnPrevFile {
+    left: 20px;
+}
+
+/* Style an actionable button or control. */
+#btnNextFile {
+    right: 20px;
+}
+
+/* Define the layout or appearance of this UI element. */
+#viewBody>img {
+    display: none !important;
+}
+
+/* ==========================================================================
+   VIEWERJS LIBRARY OVERRIDES
+   Used by: js/engine/viewerjs.min.js, js/views/viewer.js
+   ========================================================================== */
+
+/* Arrange media preview and viewer controls. */
+.viewer-container {
+    background-color: transparent !important;
+}
+
+/* Arrange media preview and viewer controls. */
+.viewer-backdrop {
+    background-color: transparent !important;
+}
+
+/* Arrange media preview and viewer controls. */
+.viewer-canvas>img {
+    border-radius: 6px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Arrange media preview and viewer controls. */
+.viewer-toolbar>ul {
+    background-color: var(--preview-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--preview-outline);
+    border-radius: 28px;
+    padding: 6px 12px;
+    box-shadow: 0 4px 16px var(--preview-nav-shadow);
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0 auto;
+}
+
+/* Arrange media preview and viewer controls. */
+.viewer-toolbar>ul>li {
+    background-color: transparent;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+/* Style the corresponding interactive or UI state. */
+.viewer-toolbar>ul>li:hover {
+    background-color: var(--preview-hover);
+    transform: scale(1.08);
+}
+
+/* Style the corresponding interactive or UI state. */
+.viewer-toolbar>ul>li:focus {
+    box-shadow: none;
+}
+
+/* Arrange media preview and viewer controls. (invert white icons on light mode) */
+.viewer-toolbar>ul>li::before {
+    filter: invert(0.8);
+    margin: 0 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    /* Configure theme-dependent design tokens or color overrides. */
+    :root:not([data-theme="light"]) .viewer-toolbar>ul>li::before {
+        filter: none;
+    }
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .viewer-toolbar>ul>li::before {
+    filter: none;
+}
+
+/* Arrange media preview and viewer controls. */
+.viewer-tooltip {
+    background-color: var(--preview-nav-bg);
+    color: var(--preview-text);
+    border: 1px solid var(--preview-outline);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    font-weight: 500;
+    box-shadow: 0 4px 12px var(--preview-nav-shadow);
+}
+
+/* ==========================================================================
+   MOBILE VIEWER ACTION MENU
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Arrange media preview and viewer controls. */
+.viewer-more-btn {
+    display: none;
+}
+
+/* Mobile / Tablet (<768px) */
+@media (max-width: 768px) {
+
+    /* Arrange the relevant screen header and controls. */
+    .topbar-actions {
+        display: none !important;
+    }
+
+    /* Arrange media preview and viewer controls. */
+    .viewer-more-btn {
+        display: flex !important;
+    }
+
+    /* Define the layout or appearance of this UI element. */
+    #txName {
+        max-width: none !important;
+    }
+}
+
+/* ===== Viewer Mobile Action Menu (Popup) ===== */
+/* Define menu layout, items, and interaction affordances. */
+.viewer-action-menu {
+    position: fixed;
+    min-width: 180px;
+    max-width: 240px;
+    background-color: var(--preview-surface);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+    border: 1px solid var(--preview-outline);
+    padding: 8px;
+    display: none;
+    z-index: 3000;
+    animation: viewerMenuFadeIn 0.15s cubic-bezier(0.2, 0, 0, 1);
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+.viewer-action-menu.open {
+    display: block;
+}
+
+@keyframes viewerMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.viewer-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--preview-text);
+    transition: background-color 0.15s, color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.viewer-menu-item:hover,
+.viewer-menu-item:active {
+    background-color: var(--preview-hover);
+    color: var(--preview-primary);
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.viewer-menu-item.danger-item {
+    color: var(--preview-danger, #b3261e);
+}
+
+/* Style the corresponding interactive or UI state. */
+.viewer-menu-item.danger-item:hover,
+.viewer-menu-item.danger-item:active {
+    background-color: rgba(179, 38, 30, 0.12);
+    color: var(--preview-danger, #b3261e);
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.viewer-menu-item .menu-icon {
+    font-size: 20px;
+    color: inherit;
+}
+
+/* Define menu layout, items, and interaction affordances. */
+.viewer-menu-item .menu-label {
+    flex: 1;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   VIEWER DIALOG INPUT ADJUSTMENTS
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-input {
+    width: 100%;
+    height: 48px;
+    background-color: var(--preview-topbar);
+    border: 1px solid var(--preview-outline);
+    border-radius: 14px;
+    color: var(--preview-text);
+    font-family: inherit;
+    font-size: 15px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 16px;
+    transition: border-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.dialog-input:focus {
+    border-color: var(--preview-primary);
+}
+
+/* Mobile (<600px) */
+@media (max-width: 599px) {
+
+    /* Arrange media preview and viewer controls. */
+    .preview-topbar {
+        padding: 0 10px;
+    }
+
+    /* Define the layout or appearance of this UI element. */
+    #txName {
+        font-size: 14px;
+    }
+
+    /* Style an actionable button or control. */
+    .btn-floating-nav {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Style an actionable button or control. */
+    #btnPrevFile {
+        left: 8px;
+    }
+
+    /* Style an actionable button or control. */
+    #btnNextFile {
+        right: 8px;
+    }
+
+    /* Define the layout or appearance of this UI element. */
+    video,
+    img,
+    iframe,
+    textarea {
+        max-width: 96vw;
+        max-height: 80vh;
+    }
+
+    /* Present the audio playback interface. */
+    .audio-player-card {
+        padding: 32px 20px;
+        width: 94%;
+    }
+}
+
+/* ==========================================================================
+   SHARED DIALOG OVERRIDES (LOADED LAST)
+   Used by: index.html, js/views/viewer.js
+   ========================================================================== */
+
+/* Style shared dialog structure, inputs, and actions. */
+dialog {
+    background-color: var(--preview-surface);
+    color: var(--preview-text);
+    border: 1px solid var(--preview-outline);
+    border-radius: 28px;
+    padding: 28px;
+    max-width: 440px;
+    width: 90%;
+    margin: auto;
+    outline: none;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+    animation: m3DialogPop 0.25s cubic-bezier(0.2, 0, 0, 1);
+    box-sizing: border-box;
+}
+
+/* Style the corresponding interactive or UI state. */
+dialog:not([open]) {
+    display: none;
+}
+
+@keyframes m3DialogPop {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-title {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+    color: var(--preview-text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-title .material-symbols-outlined {
+    font-size: 26px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-body {
+    font-size: 14.5px;
+    color: var(--preview-subtext);
+    line-height: 1.55;
+    margin-bottom: 24px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-text {
+    background: transparent;
+    color: var(--preview-primary);
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 20px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-text:hover {
+    background-color: rgba(11, 87, 208, 0.08);
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-text:hover,
+:root:not([data-theme="light"]) .btn-dialog-text:hover {
+    background-color: rgba(168, 199, 250, 0.12);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-primary {
+    background-color: var(--preview-primary);
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 24px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-primary,
+:root:not([data-theme="light"]) .btn-dialog-primary {
+    color: #062e6f;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-primary:hover {
+    opacity: 0.92;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Style shared dialog structure, inputs, and actions. */
+.btn-dialog-danger {
+    background-color: #b3261e;
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 24px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-danger,
+:root:not([data-theme="light"]) .btn-dialog-danger {
+    background-color: #f2b8b5;
+    color: #601410;
+}
+
+/* Style the corresponding interactive or UI state. */
+.btn-dialog-danger:hover {
+    background-color: #8c1d18;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Configure theme-dependent design tokens or color overrides. */
+[data-theme="dark"] .btn-dialog-danger:hover,
+:root:not([data-theme="light"]) .btn-dialog-danger:hover {
+    background-color: #f9dedc;
+}
+
+/* Plain-text/code preview: escaped text, preserved whitespace, scrollable in Viewer. */
+.viewer-text-preview {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1100px;
+    max-height: calc(100dvh - 110px);
+    margin: 0 auto;
+    padding: 20px 24px;
+    overflow: auto;
+    white-space: pre;
+    tab-size: 4;
+    text-align: left;
+    font: 13px/1.6 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    color: var(--preview-text);
+    background: var(--preview-bg, transparent);
+    border-radius: 8px;
+    user-select: text;
+}
