@@ -124,11 +124,8 @@ class _Server(socketserver.ThreadingMixIn, http.server.HTTPServer):
         with self.lock:
             if ck in self._ivC:
                 return self._ivC[ck]
-        headers = {"Range": "bytes=0-11"}
-        if getattr(cli, "uHash", None):
-            headers["X-User-Hash"] = cli.uHash
         res = requests.get(f"{cli.url}/api/media/{fPid}/{fpid}/dat",
-                           headers=headers, verify=cli.verify_ssl)
+                           headers={"Range": "bytes=0-11"}, verify=cli.verify_ssl)
         if res.status_code in [200, 206] and len(res.content) == 12:
             with self.lock:
                 self._ivC[ck] = res.content
@@ -146,11 +143,8 @@ class _Server(socketserver.ThreadingMixIn, http.server.HTTPServer):
         pLen = min(PL, origSz - idx * PL)
         cLen = pLen + 16
         cE = cS + cLen - 1
-        headers = {"Range": f"bytes={cS}-{cE}"}
-        if getattr(cli, "uHash", None):
-            headers["X-User-Hash"] = cli.uHash
         res = requests.get(f"{cli.url}/api/media/{fPid}/{fpid}/dat",
-                           headers=headers, verify=cli.verify_ssl)
+                           headers={"Range": f"bytes={cS}-{cE}"}, verify=cli.verify_ssl)
         if res.status_code not in [200, 206] or len(res.content) != cLen:
             return None
         buf = res.content

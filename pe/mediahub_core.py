@@ -204,7 +204,7 @@ class MHClient:
         fk = Bencrypt.Random(32) + Bencrypt.Random(12)
         fpid = self.objPid(fk)
 
-        # thumbnail
+        # thumbnail (POST: needs user authentication)
         ext = name.split('.')[-1].lower()
         thumb = None
         if ext in ['mp4', 'webm', 'mov', 'mkv']:
@@ -221,7 +221,7 @@ class MHClient:
             if res_thumb.status_code != 200:
                 raise Exception(f"Thumbnail upload failed: code {res_thumb.status_code}")
 
-        # encrypt and upload media
+        # encrypt and upload media (POST in 2MB chunks with user authentication)
         smx = Bencrypt.SymMaster("gcmx1", fk[:32])
         encSz = smx.AfterSize(origSz)
         padSz = Opsec.PadLen(encSz)
@@ -279,7 +279,7 @@ class MHClient:
             if progCb:
                 progCb(total, total, 0)
 
-        # update metadata
+        # update metadata (POST: needs user authentication)
         flMap[name] = fk + Opsec.EncodeInt(origSz, 8, False)
         sm = Bencrypt.SymMaster("gcm1", fKey[:32])
         res = requests.post(
@@ -292,8 +292,7 @@ class MHClient:
         return True
 
     def dnFile(self, fPid, flInfo, name, outDir, progCb=None):
-        if not self.uHash:
-            raise Exception("Not authenticated")
+        # GET request: no user authentication required by server
         fk = flInfo[:44]
         origSz = Opsec.DecodeInt(flInfo[44:52], False)
         fpid = self.objPid(fk)
@@ -301,16 +300,11 @@ class MHClient:
         ciphSz = smx.AfterSize(origSz)
 
         url = f"{self.url}/api/media/{fPid}/{fpid}/dat"
-        headers = {}
-        if self.uHash:
-            headers['X-User-Hash'] = self.uHash
-
         reader = ChunkedRangeReader(
             url=url,
             total_size=ciphSz,
             chunk_size=CHUNK_SIZE,
             verify_ssl=self.verify_ssl,
-            headers=headers,
             prog_cb=progCb
         )
 

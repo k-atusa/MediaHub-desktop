@@ -382,10 +382,7 @@ class WkThumb(WkBase):
             import requests
             from engine import Bencrypt
             url = f"{self.cli.url}/api/media/{self.fPid}/{self.fpid}/thumb"
-            headers = {}
-            if getattr(self.cli, "uHash", None):
-                headers["X-User-Hash"] = self.cli.uHash
-            res = requests.get(url, headers=headers, verify=self.cli.verify_ssl)
+            res = requests.get(url, verify=self.cli.verify_ssl)
             if res.status_code == 200 and res.content:
                 sm = Bencrypt.SymMaster("gcm1", self.fkBytes[:32])
                 raw = sm.DeBin(res.content)
