@@ -1,0 +1,20 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "ge",
+  "outputfilename": "mediahub-ge",
+  "frontend:install": "",
+  "frontend:build": "",
+  "frontend:dev:watcher": "",
+  "frontend:dev:serverUrl": "",
+  "author": {
+    "name": "MediaHub Team",
+    "email": ""
+  },
+  "info": {
+    "companyName": "MediaHub",
+    "productName": "MediaHub GE",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright 2026"
+  }
+}
+

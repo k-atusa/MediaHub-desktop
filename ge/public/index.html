@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediaHub GE</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">MH</div>
+        <div>
+          <h1>MediaHub <span class="badge">GE</span></h1>
+          <p class="subtitle">Go + Wails Desktop Application Engine</p>
+        </div>
+      </div>
+      <div class="status-indicator">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">연결 확인 중...</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="grid">
+        <!-- Card 1: Greet IPC Test -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Go 백엔드 IPC 테스트</h2>
+            <p>Go 백엔드(app.go)의 <code>Greet</code> 함수를 호출합니다.</p>
+          </div>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" id="name-input" placeholder="이름을 입력하세요 (예: 사용자)" value="홍길동" />
+              <button id="greet-btn" class="btn primary-btn">호출하기</button>
+            </div>
+            <div class="result-box" id="greet-result">
+              <span class="placeholder">버튼을 눌러 Go 백엔드와 통신을 시작하세요.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: System Info & Ping -->
+        <div class="card">
+          <div class="card-header">
+            <h2>시스템 정보 및 핑 테스트</h2>
+            <p>Go 런타임 환경 정보 및 응답 속도를 확인합니다.</p>
+          </div>
+          <div class="card-body">
+            <div class="btn-group">
+              <button id="sysinfo-btn" class="btn secondary-btn">시스템 정보 조회</button>
+              <button id="ping-btn" class="btn secondary-btn">핑(Ping) 전송</button>
+            </div>
+            <div class="info-list" id="sysinfo-result">
+              <div class="info-item">
+                <span class="info-label">OS:</span>
+                <span class="info-val" id="val-os">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Architecture:</span>
+                <span class="info-val" id="val-arch">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Go Version:</span>
+                <span class="info-val" id="val-go">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Engine:</span>
+                <span class="info-val" id="val-engine">Wails v2</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Last Ping:</span>
+                <span class="info-val" id="val-ping">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Overview & Info -->
+      <div class="card full-width">
+        <div class="card-header">
+          <h2>아키텍처 안내 (Python pe → Go ge)</h2>
+        </div>
+        <div class="card-body">
+          <div class="architecture-flow">
+            <div class="flow-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <strong>고성능 & 경량화</strong>
+                <p>Python 인터프리터 없이 단일 바이너리로 컴파일되어 빠른 구동과 낮은 메모리 점유율을 제공합니다.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <strong>Wails v2 + WebView2</strong>
+                <p>Windows 내장 Microsoft Edge WebView2를 활용하여 현대적인 웹 프론트엔드를 구동합니다.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <strong>Go ↔ JS 직접 바인딩</strong>
+                <p>Go의 구조체 메서드가 프론트엔드 JavaScript(<code>window.go.main.App</code>)에 자동 바인딩됩니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>MediaHub Desktop Prototype &bull; Go Engine (GE)</span>
+    </footer>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>
+
